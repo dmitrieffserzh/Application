@@ -1,5 +1,7 @@
 @push('custom-scripts')
     <script src="{{ asset('js/components/rating.js') }}"></script>
+    <script src="{{ asset('js/components/jq_scroll.js') }}"></script>
+    <script src="{{ asset('js/components/paginate.js') }}"></script>
 @endpush
 @extends('layouts.app')
 
@@ -13,7 +15,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div id="content" class="col-md-8">
                 @include('posts.partials.item')
             </div>
         </div>

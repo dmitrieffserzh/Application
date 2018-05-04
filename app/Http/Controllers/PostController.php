@@ -7,6 +7,7 @@ use App\Post;
 use App\Extensions\Qevix;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Illuminate\Pagination\Paginator;
 use Validator;
 
 class PostController extends Controller {
@@ -17,13 +18,22 @@ class PostController extends Controller {
 		$this->middleware('auth');
 	}
 
-	public function index() {
+	public function index(Request $request) {
 
-		$posts = Post::all();
+		$posts = Post::paginate(1);
 
-		return view('posts.index',
-		['posts'=> $posts]
-		);
+
+		if($request->ajax()) {
+			return view('posts.partials.item',
+				['posts'=> $posts]
+			);
+		} else {
+
+			return view('posts.index',
+				['posts'=> $posts]
+			);
+		}
+
 	}
 
 

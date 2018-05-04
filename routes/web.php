@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('posts', 'PostController@index')->name('posts.index');
+Route::post('posts', 'PostController@index')->name('posts.index');
 Route::post('posts/create_in_list', 'PostController@createInList')->name('posts.create_in_list');
 Route::post('upload','PostController@upload')->name('upload');
 
