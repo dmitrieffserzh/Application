@@ -12,10 +12,10 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 html {
-  background: #f8f9fa;
+  background: #f4f6fb;
 }
 body {
-  background: #fafdff;
+  background: #f4f6fb;
   font-family: 'Montserrat', sans-serif !important;
   color: #9a9faf !important;
 }
@@ -114,6 +114,16 @@ body {
     width: 100%;
     height: auto;
   }
+  & .avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+  }
+  & .avatar_big {
+    width: 220px;
+    height: 220px;
+    border-radius: 15px;
+  }
 }
 .like {
   border: none;
@@ -139,4 +149,27 @@ body {
 }
 h3 {
   color: #000;
+}
+
+.online {
+  display: inline-block;
+  position: relative;
+  top: 8px;
+  left: 33px;
+  background: #c587ff;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  box-shadow: 0 0px 0px 2px #fff;
+}
+.offline {
+  display: inline-block;
+  position: relative;
+  top: 8px;
+  left: 33px;
+  background: #dfd7e3;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  box-shadow: 0 0px 0px 2px #fff;
 }

@@ -15,7 +15,7 @@ class PostController extends Controller {
 
 
 	public function __construct() {
-		$this->middleware('auth');
+		//$this->middleware('auth');
 	}
 
 	public function index(Request $request) {
@@ -24,14 +24,10 @@ class PostController extends Controller {
 
 
 		if($request->ajax()) {
-			return view('posts.partials.item',
-				['posts'=> $posts]
-			);
+			return view('posts.partials.item', compact('posts'));
 		} else {
 
-			return view('posts.index',
-				['posts'=> $posts]
-			);
+			return view('posts.index', compact('posts'));
 		}
 
 	}
@@ -123,11 +119,12 @@ class PostController extends Controller {
 
 	// IMAGE UPLOADER
 	public function upload(Request $request) {
-		$path =  public_path().'\uploads\images\\';
+		$path =  '';//public_path()//*.'\uploads\images\\*/;
+		echo $path;
 		$file = $request->file('file');
 		$filename = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'png';
 		$img = Image::make($file);
 		$img->save($path . $filename);
-		echo '/uploads/images/'.$filename;
+		echo '/uploads/'.$filename;
 	}
 }

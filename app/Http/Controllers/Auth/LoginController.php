@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+//use App\Profile;
+//use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
-class LoginController extends Controller
-{
+class LoginController extends Controller {
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -32,8 +35,14 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function logout() {
+        Cache::forget('user-is-online-' . Auth::id());
+        Auth::logout();
+
+        return redirect('');
     }
 }

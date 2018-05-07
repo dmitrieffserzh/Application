@@ -1,7 +1,7 @@
 @push('custom-scripts')
     <script src="{{ asset('js/components/rating.js') }}"></script>
-    <script src="{{ asset('js/components/jq_scroll.js') }}"></script>
-    <script src="{{ asset('js/components/paginate.js') }}"></script>
+    <!--<script src="{{ asset('js/components/jq_scroll.js') }}"></script>
+    <script src="{{ asset('js/components/paginate.js') }}"></script>-->
 @endpush
 @extends('layouts.app')
 

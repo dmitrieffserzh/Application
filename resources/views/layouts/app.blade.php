@@ -39,7 +39,8 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    &nbsp;
+                    <li><a href="{{ route('users.list') }}">Пользователи</a></li>
+                    <li><a href="{{ route('posts.index') }}">Посты</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -51,7 +52,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Auth::user()->nickname }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">

@@ -11,13 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// DEFAULT PAGE
+Route::get('/', 'PostController@index')->name('home');
 
+// AUTH
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// USERS
+Route::get('users', 'ProfileController@index')->name('users.list');
+Route::get('user/id{id}', 'ProfileController@profile')->name('users.profile');
+Route::get('user/id{id}/edit', 'ProfileController@edit')->name('users.profile.edit');
+Route::post('user/id{id}/update', 'ProfileController@update')->name('users.profile.update');
+
 
 
 Route::get('posts', 'PostController@index')->name('posts.index');

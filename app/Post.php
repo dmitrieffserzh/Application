@@ -21,4 +21,9 @@ class Post extends Model {
 		$like = $this->like()->where('user_id', Auth::id())->first();
 		return !is_null($like);
 	}
+
+    public function owner() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
 }
