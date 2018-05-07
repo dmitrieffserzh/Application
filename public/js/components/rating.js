@@ -1,9 +1,6 @@
 // LIKE SYSTEM
 
-
-$(document).ready(function () {
-
-    $('.like').click(function () {
+    $(document).on('click', '.like', function () {
         var that_main = $(this).parent();
         var data = $(this).data();
         $.ajax({
@@ -23,4 +20,3 @@ $(document).ready(function () {
         event.preventDefault();
     });
 
-});

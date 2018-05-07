@@ -20,7 +20,7 @@ class PostController extends Controller {
 
 	public function index(Request $request) {
 
-		$posts = Post::paginate(1);
+		$posts = Post::paginate(15);
 
 
 		if($request->ajax()) {
