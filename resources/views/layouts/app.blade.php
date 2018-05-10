@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @stack('custom-styles')
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     @stack('custom-scripts')

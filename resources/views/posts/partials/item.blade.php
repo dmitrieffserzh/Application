@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="col-md-6">
                     <a href="{{ route('users.profile', $post->owner->id) }}" title="{{$post->owner->nickname}}">
-                    <img src="{{$post->owner->profile->avatar}}" alt="{{$post->owner->nickname}}" class="avatar">
+                    <img src="{{ getImage('thumbnail', $post->owner->profile->avatar) }}" alt="{{ $post->owner->nickname }}" class="avatar">
                     {{$post->owner->nickname}}
                     </a>
                     @if($post->owner->isOnline())

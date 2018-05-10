@@ -12,8 +12,6 @@ use Validator;
 
 class PostController extends Controller {
 
-
-
 	public function __construct() {
 		//$this->middleware('auth');
 	}
@@ -22,14 +20,12 @@ class PostController extends Controller {
 
 		$posts = Post::paginate(15);
 
-
 		if($request->ajax()) {
 			return view('posts.partials.item', compact('posts'));
 		} else {
 
 			return view('posts.index', compact('posts'));
 		}
-
 	}
 
 

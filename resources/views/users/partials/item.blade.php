@@ -11,7 +11,9 @@
                 @else
                     <span class="offline"></span>
                 @endif
-                <img src="{{$user->profile->avatar}}" alt="{{$user->name}}" class="avatar">
+
+
+                <img src="{{ getImage('thumbnail', $user->profile->avatar) }}" alt="{{$user->name}}" class="avatar">
 
                 <a href="{{ route('users.profile', $user->id) }}" title="{{$user->nickname}}">
                     {{$user->nickname}}

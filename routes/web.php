@@ -34,3 +34,6 @@ Route::post('upload','PostController@upload')->name('upload');
 
 // LIKE
 Route::post('like', ['as' => 'like', 'uses' => 'LikeController@like']);
+
+// IMAGE UPLOADER
+Route::post('image_upload', 'ImageController@upload')->name('image.upload');

@@ -11117,7 +11117,8 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(9);
-module.exports = __webpack_require__(35);
+__webpack_require__(35);
+module.exports = __webpack_require__(36);
 
 
 /***/ }),
@@ -11130,6 +11131,7 @@ module.exports = __webpack_require__(35);
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
 window.$ = window.jQuery = __webpack_require__(2);
 //window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
 __webpack_require__(10);
@@ -31815,6 +31817,12 @@ module.exports = function spread(callback) {
 
 /***/ }),
 /* 35 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 36 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
