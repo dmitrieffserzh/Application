@@ -8,14 +8,13 @@ $(document).on('click', '.like', function () {
         type: 'POST',
         url: '/like',
         success: function (result) {
-            that_main.find('.count').text(result.like_count);
+            that_main.find('.component-like__count').text(result.like_count);
             if (result.liked === true) {
-                that_main.find('.like').css({'color': '#ff2b78'});
+                that_main.find('.like').removeClass('like--noliked').addClass('like--liked');
             } else {
-                that_main.find('.like').css({'color': '#d2d6d8'});
+                that_main.find('.like').removeClass('like--liked').addClass('like--noliked');
             }
         }
     });
     event.preventDefault();
 });
-

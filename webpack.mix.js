@@ -15,4 +15,4 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .sass('resources/assets/sass/components/image-select-area.scss', 'public/css/components');
 
-mix.copy(bootstrap_sass+"assets/fonts/bootstrap",'public/fonts');
+//mix.copy(bootstrap_sass+"assets/fonts/bootstrap",'public/fonts');

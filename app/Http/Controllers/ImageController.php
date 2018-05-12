@@ -39,6 +39,12 @@ class ImageController extends Controller {
             $img = Image::make($image->getRealPath());
             $img->fit(1000, 1000)->save($destinationPath.'/'.$input['image']);
 
+            // COVER
+            $destinationPath = public_path('/uploads/images/covers');
+            $img = Image::make($image->getRealPath());
+            $img->fit(1000, 400);
+            $img->blur(60)->save($destinationPath.'/'.$input['image']);
+
             // ORIGINAL
             $destinationPath = public_path('/uploads/images/original');
             $image->move($destinationPath, $input['image']);

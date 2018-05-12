@@ -1,31 +1,26 @@
-<div class="post">
-    <?php $count = count($users); ?>
-    @forelse ($users as $user)
-
-        <?php //print_r($post->owner->name); ?>
-
-        <div class="row">
-            <div class="col-md-12">
+<div class="col-md-12">
+    <div class="row">
+        <div class="content-users-item">
+            <div class="content-users-item__avatar">
+                <img src="{{ getImage('thumbnail', $user->profile->avatar) }}" alt="{{ $user->name }}">
                 @if($user->isOnline())
-                    <span class="online"></span>
+                    <span class="status status--online"></span>
                 @else
-                    <span class="offline"></span>
+                    <span class="status status--offline"></span>
                 @endif
-
-
-                <img src="{{ getImage('thumbnail', $user->profile->avatar) }}" alt="{{$user->name}}" class="avatar">
-
-                <a href="{{ route('users.profile', $user->id) }}" title="{{$user->nickname}}">
-                    {{$user->nickname}}
-                </a>
             </div>
-
-        </div>
-        @if(--$count > 0)
-                <hr>
+            <a class="content-users-item__link" href="{{ route('users.profile', $user->id) }}"
+               title="{{ $user->nickname }}">
+                {{ $user->nickname }}
+            </a>
+            @if($user->profile->name || $user->profile->surname)
+            <!-- <div class="content-users-item__info">{{$user->profile->name}} {{$user->profile->surname}}</div>-->
             @endif
-
-    @empty
-        <p>Нет пользователей!</p>
-    @endforelse
+            @if($user->profile->city)
+                <div class="content-users-item__info">{{ $user->profile->city }}</div>
+            @endif
+            <div class="content-users-item__info">
+                Зарегистрирован: {{ $user->profile->created_at->diffForHumans() }}</div>
+        </div>
+    </div>
 </div>
