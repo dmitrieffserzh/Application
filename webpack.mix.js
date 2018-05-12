@@ -10,9 +10,10 @@ let mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-var bootstrap_sass = './node_modules/bootstrap-sass/';
+// var bootstrap_sass = './node_modules/bootstrap-sass/';
 mix.js('resources/assets/js/app.js', 'public/js')
+    .js('resources/assets/js/main_menu.js', 'public/js/components')
    .sass('resources/assets/sass/app.scss', 'public/css')
-   .sass('resources/assets/sass/components/image-select-area.scss', 'public/css/components');
+  // .sass('resources/assets/sass/components/image-select-area.scss', 'public/css/components');
 
 //mix.copy(bootstrap_sass+"assets/fonts/bootstrap",'public/fonts');
