@@ -29,24 +29,24 @@ class ImageController extends Controller {
             $input['image'] = time().'.'.$image->getClientOriginalExtension();
 
             // THUMBNAILS
-            $destinationPath = public_path('/uploads/images/thumbnails');
+            $destinationPath = public_path('uploads'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'thumbnails');
             $img = Image::make($image->getRealPath());
            // $img->crop(100, 100, 0, 0)->save($destinationPath.'/'.$input['image']);
-            $img->fit(100, 100)->save($destinationPath.'/'.$input['image']);
+            $img->fit(100, 100)->save($destinationPath.DIRECTORY_SEPARATOR.$input['image']);
 
             // NORMAL
-            $destinationPath = public_path('/uploads/images/normal');
+            $destinationPath = public_path('uploads'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'normal');
             $img = Image::make($image->getRealPath());
-            $img->fit(1000, 1000)->save($destinationPath.'/'.$input['image']);
+            $img->fit(1000, 1000)->save($destinationPath.DIRECTORY_SEPARATOR.$input['image']);
 
             // COVER
-            $destinationPath = public_path('/uploads/images/covers');
+            $destinationPath = public_path('uploads'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'covers');
             $img = Image::make($image->getRealPath());
             $img->fit(1000, 400);
-            $img->blur(60)->save($destinationPath.'/'.$input['image']);
+            $img->blur(60)->save($destinationPath.DIRECTORY_SEPARATOR.$input['image']);
 
             // ORIGINAL
-            $destinationPath = public_path('/uploads/images/original');
+            $destinationPath = public_path('uploads'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'original');
             $image->move($destinationPath, $input['image']);
 
             Profile::find($id)->update(['avatar'=> $input['image']]);
