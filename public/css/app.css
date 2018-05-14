@@ -1272,7 +1272,7 @@ h1 {
 }
 
 html {
-  background: #f4f6fb;
+  background: #fcfeff;
   margin: 0px;
   margin: 0rem;
   padding: 0px;
@@ -1282,7 +1282,7 @@ html {
 }
 
 body {
-  background: #f4f6fb;
+  background: #fcfeff;
   padding: 65px 0px 0px 0px;
   padding: 4.0625rem 0rem 0rem 0rem;
   width: 100%;
@@ -1641,11 +1641,11 @@ body {
 }
 
 .status--online {
-  background: #c587ff;
+  background: #37ea3e;
 }
 
 .status--offline {
-  background: #dfd7e3;
+  background: #b1c6d2;
 }
 
 .component-user {

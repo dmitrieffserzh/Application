@@ -68,7 +68,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
-module.exports = __webpack_require__(3);
+module.exports = __webpack_require__(4);
 
 
 /***/ }),
@@ -85,7 +85,7 @@ module.exports = __webpack_require__(3);
 window.$ = window.jQuery = __webpack_require__(2);
 //window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
 //require('./bootstrap');
-__webpack_require__(11);
+__webpack_require__(3);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -10466,19 +10466,6 @@ return jQuery;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11429,6 +11416,12 @@ return jQuery;
         };
     });
 })(jQuery);
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

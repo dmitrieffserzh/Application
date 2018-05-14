@@ -25,7 +25,7 @@
 <header class="header">
     <div class="container">
 
-        <div class="logo">LOGO</div>
+        {{--<div class="logo">LOGO</div>--}}
         <div id="menu-container" class="menu-container">
             @if (!Auth::guest())
                 <div class="user-top-widget">

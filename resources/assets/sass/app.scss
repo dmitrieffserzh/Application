@@ -70,7 +70,7 @@ h1 {
 }
 
 html {
-  background: #f4f6fb;
+  background:#fcfeff;
   @include rem('margin', 0);
   @include rem('padding', 0);
   width: 100%;
@@ -78,7 +78,7 @@ html {
 }
 
 body {
-  background: #f4f6fb;
+  background: #fcfeff;
   @include rem('padding', 65, 0, 0, 0);
   width: 100%;
   height: auto;
@@ -482,6 +482,8 @@ body {
   @include rem('margin', 0, 0, 15, 0);
   @include rem('padding', 15, 0, 0);
   @include box-shadow(0, 3px, 3px, 0, rgba(226, 226, 226, 0.67));
+
+  //box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   @include roundedCorners(5);
   overflow: hidden;
   &-header {
@@ -525,10 +527,10 @@ body {
   @include box-shadow(0, 0, 0, 2px, rgba(255, 255, 255, 1));
   @include roundedCorners(3);
   &--online {
-    background: #c587ff;
+    background: #37ea3e;
   }
   &--offline {
-    background: #dfd7e3;
+    background: #b1c6d2;
   }
 }
 

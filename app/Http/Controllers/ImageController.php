@@ -31,7 +31,7 @@ class ImageController extends Controller {
             // THUMBNAILS
             $destinationPath = public_path('uploads'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'thumbnails');
             $img = Image::make($image->getRealPath());
-           // $img->crop(100, 100, 0, 0)->save($destinationPath.'/'.$input['image']);
+            // $img->crop(100, 100, 0, 0)->save($destinationPath.'/'.$input['image']);
             $img->fit(100, 100)->save($destinationPath.DIRECTORY_SEPARATOR.$input['image']);
 
             // NORMAL

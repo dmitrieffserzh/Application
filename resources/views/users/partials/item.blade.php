@@ -14,13 +14,19 @@
                 {{ $user->nickname }}
             </a>
             @if($user->profile->name || $user->profile->surname)
-            <!-- <div class="content-users-item__info">{{$user->profile->name}} {{$user->profile->surname}}</div>-->
+            <!-- <div class="content-users-item__info">{{$user->profile->name}} {{$user->profile->surname}} </div>-->
             @endif
             @if($user->profile->city)
                 <div class="content-users-item__info">{{ $user->profile->city }}</div>
             @endif
-            <div class="content-users-item__info">
-                Зарегистрирован: {{ $user->profile->created_at->diffForHumans() }}</div>
+            @if(!$user->isOnline())
+                <div class="content-users-item__info">
+                    {{ $user->profile->offline_at->diffForHumans() }}
+                </div>
+            @endif
+            {{--<div class="content-users-item__info">--}}
+                {{--Зарегистрирован: {{ $user->profile->created_at->diffForHumans() }}--}}
+            {{--</div>--}}
         </div>
     </div>
 </div>

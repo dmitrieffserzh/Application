@@ -49,6 +49,7 @@
                 <span class="online"></span>
             @else
                 <span class="offline"></span>
+                {{ $user->profile->offline_at->diffForHumans() }}
             @endif
 
             @if ($user->id == Auth::id())
