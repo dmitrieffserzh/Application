@@ -23,11 +23,9 @@
 <body class="body">
 
 <header class="header">
-    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white shadow">
         <div class="container">
-            <div class="row">
-                <span class="navbar-brand mb-0 h1">Navbar</span>
-            </div>
+            <span class="navbar-brand mb-0 h1"  style="font-weight:900;">LOGO</span>
         </div>
     </nav>
     <div class="container">
