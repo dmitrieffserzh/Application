@@ -23,6 +23,13 @@
 <body class="body">
 
 <header class="header">
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+        <div class="container">
+            <div class="row">
+                <span class="navbar-brand mb-0 h1">Navbar</span>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         {{--<div class="logo">LOGO</div>--}}
         {{--<div id="menu-container" class="menu-container">--}}
@@ -92,11 +99,11 @@
                 {{--</ul>--}}
             {{--</nav>--}}
         {{--</div>--}}
-        <button type="button" class="main-menu__button">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
+        {{--<button type="button" class="main-menu__button">--}}
+            {{--<span class="icon-bar"></span>--}}
+            {{--<span class="icon-bar"></span>--}}
+            {{--<span class="icon-bar"></span>--}}
+        {{--</button>--}}
         {{--<div class="splash"></div>--}}
     </div>
 </header>

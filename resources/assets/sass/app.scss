@@ -3,13 +3,22 @@
 
 @import "bootstrap";
 
+
+
+
+
+body {
+  padding-top: 90px;
+}
 .lh-100 {
   line-height: 1;
 }
 .lh-125 {
   line-height: 1.25;
 }
-
+.ow-h {
+  overflow: hidden;
+}
 
 
 
@@ -19,16 +28,14 @@
   // LIKE
   &-like {
     &__count {
-      display: inline-block;
       min-width: 35px;
       font-family: Arial, monospace;
-      font-size: 14px;
+      font-size: 15px;
       color: #b6bcc7;
       text-align: right;
       vertical-align: middle;
     }
     &__button {
-      display: inline-block;
       border: none;
       background: none;
       outline: none;

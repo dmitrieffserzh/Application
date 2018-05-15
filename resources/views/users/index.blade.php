@@ -9,7 +9,7 @@
 
         <section class="section">
 
-            <h6 class="border-bottom border-gray pb-2 mb-0">Пользователи</h6>
+            <h4 class="border-bottom border-gray pb-2 mb-0">Пользователи</h4>
             <?php $count = count($users); ?>
             @forelse ($users as $user)
 

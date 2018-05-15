@@ -1,4 +1,4 @@
-<div class="media py-3 border-bottom border-gray">
+<div class="media align-items-stretch py-3 border-bottom border-gray">
     <span class="d-inline-block position-relative mr-2">
         <img class="rounded-circle" style="width: 58px; height: 58px;" src="{{ getImage('thumbnail', $user->profile->avatar) }}" alt="{{ $user->nickname }}">
         @if($user->isOnline())
@@ -13,7 +13,7 @@
         </a>
 
         @if($user->profile->name || $user->profile->surname)
-            <span class="d-block text-muted small lh-125">{{$user->profile->name}} {{$user->profile->surname}}</span>
+            <span class="d-block text-secondary small lh-125">{{$user->profile->name}} {{$user->profile->surname}}</span>
         @endif
 
         {{--@if($user->profile->city)--}}

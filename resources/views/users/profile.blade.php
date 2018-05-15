@@ -6,77 +6,99 @@
     <script src="{{ asset('js/components/image-uploader.js') }}"></script>
 @endpush
 @extends('layouts.app')
-<!--<div style="
-        margin-top: -30px;
+<style>
+    .bg-profile {
+
         background: url('{{ getImage('cover', $user->profile->avatar) }}') no-repeat center center;
         background-size: cover;
         width: 100%;
         height: 300px
-        "></div>-->
+    }
+</style>
 @section('content')
-    <main id="content" class="col-md-8 mb-3 p-3 bg-white rounded shadow">
-        <section class="section">
+    <main id="content" class="col-md-8 mb-3 p-0 bg-white rounded shadow ow-h">
+        <section class="section profile">
+            <div class="profile-header bg-profile">
+                <div class="media pb-3 px-3 border-bottom border-gray lh-100">
+                    <span class="d-inline-block position-relative my-5 mx-3">
+                       <img class="rounded-circle" style="width: 200px; height: 200px;"
+                            src="{{ getImage('normal', $user->profile->avatar) }}"
+                            alt="{{ $user->nickname }}">
+                    </span>
+                    <div class="media-body align-self-center">
+                        <h1 class="text-white display-4">
+                            {{ $user->nickname }}
+                        </h1>
 
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success alert-block">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{ $message }}</strong>
+                        @if($user->isOnline())
+                            <span class="d-block text-light small lh-125 font-weight-light font-monospace">
+                                онлайн
+                            </span>
+                        @else
+                            <span class="d-block text-light small lh-125 font-weight-light font-monospace">
+                                {{ getOnlineTime($user->profile->sex, $user->profile->offline_at->diffForHumans()) }}
+                            </span>
+                        @endif
+                    </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="col-md-4">
-                    <strong>Original Image:</strong>
-                    <br/>
-                    <img src="/images/{{ Session::get('image') }}"/>
-                </div>
-                <div class="col-md-4">
-                    <strong>Thumbnail Image:</strong>
-                    <br/>
-                    <img src="/thumbnail/{{ Session::get('image') }}"/>
-                </div>
 
-            @endif
-
-			<?php //print_r($post->owner->name); ?>
-
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ $message }}</strong>
+            </div>
 
             <div class="col-md-4">
-                <img src="{{ getImage('thumbnail', $user->profile->avatar) }}" alt="{{$user->nickname}}"
-                     class="rounded">
-                @include('users.partials.image_form')
+                <strong>Original Image:</strong>
+                <br/>
+                <img src="/images/{{ Session::get('image') }}"/>
             </div>
-            <div class="col-md-8">
-                <h4>{{$user->nickname}}</h4>
-                @if($user->isOnline())
-                    <span class="online"></span>
-                @else
-                    <span class="offline"></span>
-                    {{ getOnlineTime($user->profile->sex, $user->profile->offline_at->diffForHumans()) }}
-                @endif
-
-                @if ($user->id == Auth::id())
-                    <a href="{{ route('users.profile.edit', $user->id) }}" title="Изменить профиль"
-                       class="pull-right">
-                        Изменить профиль
-                    </a>
-                @endif
+            <div class="col-md-4">
+                <strong>Thumbnail Image:</strong>
+                <br/>
+                <img src="/thumbnail/{{ Session::get('image') }}"/>
             </div>
 
-            <hr>
-            <div>Ава: {{$user->profile->avatar}}</div>
-            <hr>
-            <div>Имя: {{$user->profile->name}}</div>
-            <hr>
-            <div>фамилия: {{$user->profile->surname}}</div>
-            <hr>
-            <div>Пол: {{ getSex($user->profile->sex) }}</div>
-            <hr>
-            <div>Город: {{$user->profile->city}}</div>
-            <hr>
-            <div>Телефон: {{$user->profile->phone}}</div>
-            <hr>
-            <div>Обомне: {{$user->profile->about_user}}</div>
-            <hr>
-            <div>Зарегистрирован: {{ $user->profile->created_at->diffForHumans() }}</div>
+        @endif
+
+		<?php //print_r($post->owner->name); ?>
+
+
+
+            <h4>{{$user->nickname}}</h4>
+            @if($user->isOnline())
+                <span class="online"></span>
+            @else
+                <span class="offline"></span>
+                {{ getOnlineTime($user->profile->sex, $user->profile->offline_at->diffForHumans()) }}
+            @endif
+
+            @if ($user->id == Auth::id())
+                <a href="{{ route('users.profile.edit', $user->id) }}" title="Изменить профиль"
+                   class="pull-right">
+                    Изменить профиль
+                </a>
+            @endif
+
+
+        <hr>
+        <hr>
+        <div>Имя: {{$user->profile->name}}</div>
+        <hr>
+        <div>фамилия: {{$user->profile->surname}}</div>
+        <hr>
+        <div>Пол: {{ getSex($user->profile->sex) }}</div>
+        <hr>
+        <div>Город: {{$user->profile->city}}</div>
+        <hr>
+        <div>Телефон: {{$user->profile->phone}}</div>
+        <hr>
+        <div>Обомне: {{$user->profile->about_user}}</div>
+        <hr>
+        <div>Зарегистрирован: {{ $user->profile->created_at->diffForHumans() }}</div>
 
 
         </section>
