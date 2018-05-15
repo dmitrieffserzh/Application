@@ -18,6 +18,7 @@ class CreateProfilesTable extends Migration
             $table->integer('user_id');
             $table->string('name')->nullable();
             $table->string('surname')->nullable();
+            $table->intager('sex');
             $table->string('city')->nullable();
             $table->string('phone')->nullable();
             $table->string('birthday')->nullable();

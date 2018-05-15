@@ -5,10 +5,11 @@
 
 @section('content')
 
-    <main id="content" class="col-md-8 content-users">
+    <main id="content" class="col-md-8 mb-3 p-3 bg-white rounded shadow">
+
         <section class="section">
-            <h1>Пользователи</h1>
-            <br>
+
+            <h6 class="border-bottom border-gray pb-2 mb-0">Пользователи</h6>
             <?php $count = count($users); ?>
             @forelse ($users as $user)
 
@@ -25,7 +26,11 @@
                 </div>
 
             @endforelse
+            <small class="d-block text-center mt-3">
+                <button type="button" class="btn btn-primary btn-block">Загрузить еще</button>
+            </small>
         </section>
+
     </main>
 
 @endsection

@@ -1,32 +1,35 @@
-<div class="col-md-12">
-    <div class="row">
-        <div class="content-users-item">
-            <div class="content-users-item__avatar">
-                <img src="{{ getImage('thumbnail', $user->profile->avatar) }}" alt="{{ $user->name }}">
-                @if($user->isOnline())
-                    <span class="status status--online"></span>
-                @else
-                    <span class="status status--offline"></span>
-                @endif
-            </div>
-            <a class="content-users-item__link" href="{{ route('users.profile', $user->id) }}"
-               title="{{ $user->nickname }}">
-                {{ $user->nickname }}
-            </a>
-            @if($user->profile->name || $user->profile->surname)
-            <!-- <div class="content-users-item__info">{{$user->profile->name}} {{$user->profile->surname}} </div>-->
-            @endif
-            @if($user->profile->city)
-                <div class="content-users-item__info">{{ $user->profile->city }}</div>
-            @endif
-            @if(!$user->isOnline())
-                <div class="content-users-item__info">
-                    {{ $user->profile->offline_at->diffForHumans() }}
-                </div>
-            @endif
-            {{--<div class="content-users-item__info">--}}
-                {{--Зарегистрирован: {{ $user->profile->created_at->diffForHumans() }}--}}
-            {{--</div>--}}
-        </div>
+<div class="media py-3 border-bottom border-gray">
+    <span class="d-inline-block position-relative mr-2">
+        <img class="rounded-circle" style="width: 58px; height: 58px;" src="{{ getImage('thumbnail', $user->profile->avatar) }}" alt="{{ $user->nickname }}">
+        @if($user->isOnline())
+            <span class="component-status component-status--online m-1"></span>
+        @else
+            <span class="component-status component-status--offline m-1"></span>
+        @endif
+    </span>
+    <div class="media-body">
+        <a class="text-dark font-weight-bold" href="{{ route('users.profile', $user->id) }}" title="{{ $user->nickname }}">
+            {{ $user->nickname }}
+        </a>
+
+        @if($user->profile->name || $user->profile->surname)
+            <span class="d-block text-muted small lh-125">{{$user->profile->name}} {{$user->profile->surname}}</span>
+        @endif
+
+        {{--@if($user->profile->city)--}}
+            {{--<span class="d-block text-muted small lh-125">--}}
+                {{--{{ $user->profile->city }}--}}
+            {{--</span>--}}
+        {{--@endif--}}
+
+        @if($user->isOnline())
+            <span class="d-block text-muted small lh-125 font-weight-light font-monospace">
+                онлайн
+            </span>
+        @else
+            <span class="d-block text-muted small lh-125 font-weight-light font-monospace">
+                {{ getOnlineTime($user->profile->sex, $user->profile->offline_at->diffForHumans()) }}
+            </span>
+        @endif
     </div>
 </div>

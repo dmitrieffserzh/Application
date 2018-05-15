@@ -16,3 +16,27 @@ function getImage($size, $image_name){
     }
     return '/images/user.png';
 }
+
+
+// GET SEX
+function getSex($sex_int){
+	if($sex_int == 1) {
+		return 'Мужской';
+	} else if($sex_int == 2) {
+		return 'Женский';
+	}
+
+	return 'Ошибка! Пол не определен!';
+}
+
+
+// GET ONLINE ON SEX
+function getOnlineTime($sex_int, $time){
+	if($sex_int == 1) {
+		return 'заходил '.$time;
+	} elseif ($sex_int == 2) {
+		return 'заходила '.$time;
+	}
+
+	return $time;
+}

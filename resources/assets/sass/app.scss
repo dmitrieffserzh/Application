@@ -1,589 +1,28 @@
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,900");
-// Variables
-//@import "variables";
-@import "mixins";
-//@import "reset.css";
-@import "new_grid.css";
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600");
 
-// Bootstrap
-//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "bootstrap";
 
-// Mixins
-// @include animate-link($screenGreen, $gothamMedium, 14);
-// @include animation('slide-down 5s 3');
-// @include keyframes(slide-down) {0%{ opacity:1; } 90%{ opacity:0; }}
-// @include single-transition(background, 1s, ease-in-out, 0);
-// @include double-transition(background, 1s, ease-in-out, 0, opacity, .1s, ease-in-out, 0);
-// @include transform("origin", 0, 0);
-// @include linear-gradient(-10, #cccccc, #333333);
-// @include linearGradient(#cccccc, #333333);
-// @include backface-visibility("hidden");
-// @include background-cover();
-// @include box-sizing();
-// @include box-shadow(1px, 2px, 2px, 2px, #000);
-// @include inner-shadow(1px, 2px, 2px, #000);
-// @include breakpoint(940) { width:80%; }
-// @include min-breakpoint(940) { width:80%; }
-// @include clearfix();
-// @include hide-text();
-// @include hoverFocus('text-decoration', 'none');
-// @include inline-block();
-// @include margin-auto();
-// @include opacity();
-// @include placeholder-color(#333);
-// @include replace-text();
-// @include retina("logo2x.png", 100, 50);
-// @include roundedCorners(10);
-// @include single-transform($deg);
-// @include single-text-shadow(1px, 2px, 2px, #000);
-// @include translate(0);
-// @include arrow("left", #cccccc, 10);  left|right|up|down
-// example: @include rem("margin", 10, 5, 10, 5);
-// example: @include rem("font-size", 14);
-
-* {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
-  outline: none;
+.lh-100 {
+  line-height: 1;
+}
+.lh-125 {
+  line-height: 1.25;
 }
 
-hr {
-  border: none;
-  border-top: 1px Solid #f5f5f8;
-  @include rem('margin', 15, 0);
-  width: 100%;
-}
-
-a {
-  @include single-transition(color, .3s, linear, 0s);
-  &:hover {
-    @include single-transition(color, .3s, linear, 0s);
-  }
-}
-
-h1 {
-  color: #000;
-  font-weight: 700;
-  font-size: 22px;
-  margin: 15px 15px 0;
-}
-
-html {
-  background:#fcfeff;
-  @include rem('margin', 0);
-  @include rem('padding', 0);
-  width: 100%;
-  height: auto;
-}
-
-body {
-  background: #fcfeff;
-  @include rem('padding', 65, 0, 0, 0);
-  width: 100%;
-  height: auto;
-  font-family: 'Montserrat', sans-serif !important;
-  @include rem('font-size', 16);
-  color: #9a9faf !important;
-  line-height: 1.4em;
-}
-
-//main,
-//aside {
-//  float: left;
-//  display: block;
-//}
-
-/* HEADER >> ================================================================ */
-.header {
-  position: fixed;
-  top: -1px;
-  left: -1px;
-  right: -1px;
-  background: #111;
-  @include rem('padding', 15, 0);
-  width: 100.5%;
-  height: 50px;
-  @include box-shadow(0, 3px, 3px, 0, rgba(0, 0, 0, 0.05));
-  z-index: 80;
-
-  & .logo {
-    font-weight: 900;
-    color: #fff;
-    height: 20px;
-    font-size: 24px;
-    float: left;
-    line-height: 23px;
-    & span {
-      color: #fff;
-      display: inline-block;
-      background: #ff0774;
-      padding: 5px;
-      border-radius: 5px;
-    }
-  }
-}
-
-.menu-container {
-  position: relative;
-  .main-menu {
-    display: inline-block;
-    &__list {
-      @include rem('margin', 0);
-      @include rem('padding', 0);
-      list-style: none;
-    }
-    &__item {
-      display: inline-block;
-      float: left;
-    }
-    &__link {
-      display: block;
-      @include rem('padding', 5, 15);
-    }
-  }
-}
-
-.user-top-widget {
-  display: none;
-}
-
-.main-menu__button {
-  display: none;
-  float: right;
-  position: relative;
-  background: transparent;
-  border: none;
-  padding-right: 0;
-  outline: none;
-  z-index: 100;
-  & .icon-bar {
-    display: block;
-    background: #fff;
-    @include rem('margin', 3, 0);
-    width: 25px;
-    height: 2px;
-    @include single-transition(background, .15s, linear, 0s);
-  }
-}
-
-/* MENU MEDIA QUERIES >> ================================================================ */
-@media (max-width: 768px) {
-  .menu-container {
-    position: absolute;
-    top: 0;
-    right: -80%;
-    bottom: 0;
-    background: #fff;
-    width: 70%;
-    height: auto;
-    @include single-transition(right, .15s, linear, 0s);
-    @include box-shadow(-3px, 0, 3px, 0, rgba(0, 0, 0, 0.07));
-    z-index: 90;
-    &--menu-open {
-      right: 0;
-
-    }
-
-    .user-top-widget {
-      display: block;
-      float: left;
-      position: relative;
-      @include rem('padding', 60, 15, 15);
-      @include rem('margin', 0, 0, 15);
-      width: 100%;
-      overflow: hidden;
-      &__background {
-        position: absolute;
-        top: -5px;
-        left: -5px;
-        right: -5px;
-        bottom: -5px;
-        width: 130%;
-        height: 200px;
-        filter: blur(3px);
-        z-index: -1;
-      }
-      &__avatar {
-        display: inline-block;
-        float: left;
-        position: relative;
-        @include rem('margin', 0, 10, 0, 0);
-        line-height: 0;
-        & img {
-          @include rem('width', 60);
-          @include rem('height', 60);
-          @include roundedCorners(30);
-          @include box-shadow(0, 0, 0, 1px, rgba(189, 191, 255, 0.35));
-        }
-        & .status {
-          right: 5px;
-          bottom: 5px;
-        }
-      }
-      &__name {
-        color: #fff;
-        line-height: 3.5em;
-      }
-    }
 
 
-    .main-menu {
-      display: block;
-      float: left;
-      width: 100%;
-      &__list {
-        float: left;
-        @include rem('margin', 0);
-        @include rem('padding', 0);
-        list-style: none;
-        width: 100%;
-      }
-      &__item {
-        display: block;
-        float: left;
-        border-bottom: 1px Solid #f5f5f8;
-        width: 100%;
-        &:last-child {
-          border: none;
-        }
-      }
-      &__link {
-        display: block;
-        @include rem('padding', 5, 15);
 
-      }
-    }
-  }
-  .main-menu__button {
-    display: block;
-  }
-  .splash {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    //background: rgba(37, 45, 68, 0.62);
-    background: #101010;
-    width: 100%;
-    height: auto;
-    opacity: 0;
-    @include single-transition(all, .2s, linear, 0s);
-  }
-}
-
-/* FOOTER >> ================================================================ */
-.footer {
-  min-height: 400px;
-}
-
-//
-//
-//.editor_box {
-//    overflow-y: hidden;
-//    height: 34px;
-//    box-shadow: 0 0 3px 0 rgba(226, 226, 226, 0.67);
-//    @include single-transition(all, .2s, linear, 0s);
-//    &__textarea {
-//      background: #fff;
-//      @include rem('padding', 15);
-//      width: 100%;
-//      min-width: 100%;
-//      max-width: 100%;
-//      height: 230px;
-//      overflow-y: auto;
-//      &:focus {
-//        outline: none;
-//      }
-//    }
-//    &__toolbar {
-//      background: #fbfbff;
-//      padding: 3px;
-//    }
-//    &--open {
-//      visibility: visible;
-//      opacity: 1;
-//      height: 300px;
-//
-//      box-shadow: 0px 2px 10px 0 rgba(226, 226, 226, 0.67);
-//    }
-//  & input {
-//    border: none;
-//    box-shadow: none;
-//    border-radius: 0;
-//    border-bottom: 1px solid #f5f5f8;
-//    &:focus {
-//      box-shadow: none;
-//    }
-//  }
-//  .btn {
-//    background: #709fdc !important;
-//    color: #fff !important;
-//    border-radius: 0px !important;
-//    box-shadow: none;
-//    border: none;
-//    height: 30px;
-//    width: 30px;
-//    text-align: center;
-//    margin-right: 3px;
-//    @include single-transition(all, .3s, linear, 0s);
-//    &:hover {
-//      background: #5983b9 !important;
-//    }
-//    &input {
-//      &:hover {
-//        &-image {
-//          background: #5983b9 !important;
-//          &:hover {
-//
-//          }
-//        }
-//      }
-//    }
-//    &-info {
-//      background: #4d73a5 !important;
-//    }
-//    &-toolbar {
-//      margin: 0;
-//    }
-//    &-group {
-//      margin-left: 0 !important;
-//    }
-//    & .glyphicon {
-//      left: -3px;
-//    }
-//  }
-//  & img {
-//    display: block;
-//  }
-//}
-
-//.post {
-//  padding: 15px;
-//  float: left;
-//  width: 100%;
-//  background: #fff;
-//  box-shadow: 0 0 3px 0 rgba(226, 226, 226, 0.67);
-//  margin-bottom: 25px;
-//  border-radius: 5px;
-//  & img {
-//    width: 100%;
-//    height: auto;
-//  }
-//  & .avatar {
-//    width: 30px;
-//    height: 30px;
-//    border-radius: 15px;
-//  }
-//  & .avatar_big {
-//    width: 220px;
-//    height: 220px;
-//    border-radius: 15px;
-//  }
-//}
-//.like {
-//  border: none;
-//  background: none;
-//  font-size: 20px;
-//  outline: none;
-//  line-height: 0;
-//  color: #d2d6d8;
-//  @include single-transition(all, .2s, linear, 0s);
-//}
-//.count {
-//  line-height: 26px;
-//  float: left;
-//  display: block;
-//  width: 15px;
-//  text-align: right;
-//}
-//
-//h3 {
-//  color: #000;
-//}
-//
-//.online {
-//  display: inline-block;
-//  position: relative;
-//  top: 8px;
-//  left: 33px;
-//  background: #c587ff;
-//  width: 6px;
-//  height: 6px;
-//  border-radius: 50%;
-//  box-shadow: 0 0px 0px 2px #fff;
-//}
-//.offline {
-//  display: inline-block;
-//  position: relative;
-//  top: 8px;
-//  left: 33px;
-//  background: #dfd7e3;
-//  width: 6px;
-//  height: 6px;
-//  border-radius: 50%;
-//  box-shadow: 0 0px 0px 2px #fff;
-//}
-
-///////////////////////
-/////// CONTENT ///////
-///////////////////////
-
-// CONTENT USERS
-.content-users {
-  background: #fff;
-  @include rem('margin', 0, 0, 30, 0);
-  @include rem('padding', 15, 0, 0);
-  @include box-shadow(0, 3px, 3px, 0, rgba(226, 226, 226, 0.67));
-  @include roundedCorners(5);
-  &-item {
-    border-top: 1px Solid #f5f5f8;
-    float: left;
-    @include rem('padding', 15);
-    width: 100%;
-    &__avatar {
-      display: inline-block;
-      float: left;
-      position: relative;
-      @include rem('margin', 0, 10, 0, 0);
-      line-height: 0;
-      & img {
-        @include rem('width', 60);
-        @include rem('height', 60);
-        @include roundedCorners(30);
-        @include box-shadow(0, 0, 3px, 1px, rgba(189, 191, 255, 0.15));
-      }
-      & .status {
-        right: 5px;
-        bottom: 5px;
-      }
-    }
-    &__link {
-      color: #000;
-      text-decoration: none;
-      &:hover {
-        color: #5b7694;
-      }
-    }
-    &__info {
-      @include rem('font-size', 11);
-      color: #abb8ca;
-      @include rem('line-height', 15);
-      @include rem('letter-spacing', 0.5);
-    }
-  }
-}
-
-/// ARTICLES
-.article {
-  background: #fff;
-  @include rem('margin', 0, 0, 15, 0);
-  @include rem('padding', 15, 0, 0);
-  @include box-shadow(0, 3px, 3px, 0, rgba(226, 226, 226, 0.67));
-
-  //box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  @include roundedCorners(5);
-  overflow: hidden;
-  &-header {
-    @include rem('padding', 0, 15);
-    & h2 {
-      //border-top: 1px Solid #f5f5f8;
-      @include rem('margin', 5, 0, 0);
-      @include rem('padding', 10, 0);
-      @include rem('font-size', 22);
-      font-weight: bold;
-      color: #000;
-    }
-  }
-  &-content {
-    @include rem('font-size', 16);
-
-    & img {
-      width: 100%;
-      height: auto;
-    }
-    & p {
-      @include rem('padding', 0, 15);
-    }
-  }
-  &-footer {
-    display: block;
-    border-top: 1px Solid #f5f5f8;
-    @include rem('padding', 10, 15);
-  }
-
-}
-
-// COMPONENTS
-.status {
-  display: inline-block;
-  position: absolute;
-  right: 1px;
-  bottom: 1px;
-  width: 6px;
-  height: 6px;
-  @include box-shadow(0, 0, 0, 2px, rgba(255, 255, 255, 1));
-  @include roundedCorners(3);
-  &--online {
-    background: #37ea3e;
-  }
-  &--offline {
-    background: #b1c6d2;
-  }
-}
 
 .component {
-
-  // USER
-  &-user {
-    display: inline-block;
-    &__avatar {
-      display: inline-block;
-      float: left;
-      position: relative;
-      @include rem('margin', 0, 10, 0, 0);
-      line-height: 0;
-      & img {
-        @include rem('width', 30);
-        @include rem('height', 30);
-        @include roundedCorners(15);
-        @include box-shadow(0, 0, 3px, 1px, rgba(189, 191, 255, 0.15));
-      }
-    }
-    &__link {
-      display: block;
-      float: left;
-      @include rem('line-height', 14);
-      text-decoration: none;
-    }
-    &__name {
-      //display: block;
-      float: left;
-      width: 100%;
-      @include rem('font-size', 14);
-      color: #000;
-      font-weight: 500;
-    }
-    &__date {
-      @include rem('font-size', 11);
-      color: #c0c0c0;
-      @include rem('letter-spacing', 0.5);
-    }
-    &:hover &__name {
-      color: #c0c0c0;
-    }
-  }
 
   // LIKE
   &-like {
     &__count {
       display: inline-block;
-      //@include rem('padding', 0, 5);
-      @include rem('min-width', 35);
+      min-width: 35px;
       font-family: Arial, monospace;
-      @include rem('font-size', 14);
+      font-size: 14px;
       color: #b6bcc7;
       text-align: right;
       vertical-align: middle;
@@ -611,6 +50,24 @@ body {
         -o-animation: dislike .2s normal;
         animation: dislike .2s normal;
       }
+    }
+  }
+
+  // STATUS
+  &-status {
+    display: inline-block;
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    width: 6px;
+    height: 6px;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 1);
+    border-radius: 3px;
+    &--online {
+      background: #37ea3e;
+    }
+    &--offline {
+      background: #b1c6d2;
     }
   }
 }
@@ -715,13 +172,219 @@ body {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (max-width: 768px) {
-  #content {
-    margin-left: -15px;
-    margin-right: -15px;
-    border-radius: 0;
-  }
+  #content,
   .article {
-    border-radius: 0;
+    border-radius: 0 !important;
   }
 }
+//
+//
+//
+///* HEADER >> ================================================================ */
+//.header {
+//  position: fixed;
+//  top: -1px;
+//  left: -1px;
+//  right: -1px;
+//  background: #111;
+//  //@include rem('padding', 15, 0);
+//  width: 100.5%;
+//  height: 50px;
+//  //@include box-shadow(0, 3px, 3px, 0, rgba(0, 0, 0, 0.05));
+//  z-index: 80;
+//
+//  & .logo {
+//    font-weight: 900;
+//    color: #fff;
+//    height: 20px;
+//    font-size: 24px;
+//    float: left;
+//    line-height: 23px;
+//    & span {
+//      color: #fff;
+//      display: inline-block;
+//      background: #ff0774;
+//      padding: 5px;
+//      border-radius: 5px;
+//    }
+//  }
+//}
+//
+//.menu-container {
+//  position: relative;
+//  .main-menu {
+//    display: inline-block;
+//    &__list {
+//     // @include rem('margin', 0);
+//      //@include rem('padding', 0);
+//      list-style: none;
+//    }
+//    &__item {
+//      display: inline-block;
+//      float: left;
+//    }
+//    &__link {
+//      display: block;
+//      //@include rem('padding', 5, 15);
+//    }
+//  }
+//}
+//
+//.user-top-widget {
+//  display: none;
+//}
+//
+//.main-menu__button {
+//  display: none;
+//  float: right;
+//  position: relative;
+//  background: transparent;
+//  border: none;
+//  padding-right: 0;
+//  outline: none;
+//  z-index: 100;
+//  & .icon-bar {
+//    display: block;
+//    background: #fff;
+//    //@include rem('margin', 3, 0);
+//    width: 25px;
+//    height: 2px;
+//   // @include single-transition(background, .15s, linear, 0s);
+//  }
+//}
+//
+///* MENU MEDIA QUERIES >> ================================================================ */
+//@media (max-width: 768px) {
+//  .menu-container {
+//    position: absolute;
+//    top: 0;
+//    right: -80%;
+//    bottom: 0;
+//    background: #fff;
+//    width: 70%;
+//    height: auto;
+//   // @include single-transition(right, .15s, linear, 0s);
+//    //@include box-shadow(-3px, 0, 3px, 0, rgba(0, 0, 0, 0.07));
+//    z-index: 90;
+//    &--menu-open {
+//      right: 0;
+//
+//    }
+//
+//    .user-top-widget {
+//      display: block;
+//      float: left;
+//      position: relative;
+//      //@include rem('padding', 60, 15, 15);
+//     //@include rem('margin', 0, 0, 15);
+//      width: 100%;
+//      overflow: hidden;
+//      &__background {
+//        position: absolute;
+//        top: -5px;
+//        left: -5px;
+//        right: -5px;
+//        bottom: -5px;
+//        width: 130%;
+//        height: 200px;
+//        filter: blur(3px);
+//        z-index: -1;
+//      }
+//      &__avatar {
+//        display: inline-block;
+//        float: left;
+//        position: relative;
+//       // @include rem('margin', 0, 10, 0, 0);
+//        line-height: 0;
+//        & img {
+//          //@include rem('width', 60);
+//         // @include rem('height', 60);
+//          //@include roundedCorners(30);
+//          //@include box-shadow(0, 0, 0, 1px, rgba(189, 191, 255, 0.35));
+//        }
+//        & .status {
+//          right: 5px;
+//          bottom: 5px;
+//        }
+//      }
+//      &__name {
+//        color: #fff;
+//        line-height: 3.5em;
+//      }
+//    }
+//
+//
+//    .main-menu {
+//      display: block;
+//      float: left;
+//      width: 100%;
+//      &__list {
+//        float: left;
+//       // @include rem('margin', 0);
+//        //@include rem('padding', 0);
+//        list-style: none;
+//        width: 100%;
+//      }
+//      &__item {
+//        display: block;
+//        float: left;
+//        border-bottom: 1px Solid #f5f5f8;
+//        width: 100%;
+//        &:last-child {
+//          border: none;
+//        }
+//      }
+//      &__link {
+//        display: block;
+//       // @include rem('padding', 5, 15);
+//
+//      }
+//    }
+//  }
+//  .main-menu__button {
+//    display: block;
+//  }
+//  .splash {
+//    display: none;
+//    position: absolute;
+//    top: 0;
+//    left: 0;
+//    right: 0;
+//    bottom: 0;
+//    //background: rgba(37, 45, 68, 0.62);
+//    background: #101010;
+//    width: 100%;
+//    height: auto;
+//    opacity: 0;
+//    //@include single-transition(all, .2s, linear, 0s);
+//  }
+//}
+//
+//
+
+
+
