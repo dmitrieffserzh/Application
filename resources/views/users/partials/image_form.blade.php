@@ -1,11 +1,40 @@
-<form action="{{ route('image.upload') }}" enctype="multipart/form-data" method="POST">
+@push('custom-scripts')
+    <script src="{{ asset('js/components/profile-image-uploader.js') }}"></script>
+@endpush
+<form class="profile-image__form" action="{{ route('image.upload') }}" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}
-    <div class="alert alert-danger print-error-msg" style="display:none">
-        <ul></ul>
+    <div class="btn-file">
+        <input id="image_input" type="file" name="image" class="profile-image__form-input">
     </div>
-    <input id="image" type="file" name="image" class="form-control">
-    <button id="image-submit" class="btn btn-success upload-image" type="submit">Upload Image</button>
-{{--</form>--}}
+</form>
+
+<script>
+    // onchange="uploadImage();"
+    // function uploadImage() {
+    //     var form = new FormData();
+    //     var image = form.files;
+    //     form.append('image', image);
+    //     $.ajax({
+    //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    //         url: '/image_upload',
+    //         data: form,
+    //         cache: false,
+    //         contentType: false,
+    //         processData: false,
+    //         type: 'POST',
+    //         complete: function (msg) {
+    //             $('.print-error-msg').find("ul").html('');
+    //             $('.print-error-msg').css('display', 'block');
+    //             $.each(msg, function (key, value) {
+    //                 $('.print-error-msg').find("ul").append('<li>' + value + '</li>');
+    //             });
+    //
+    //         }
+    //     })
+    // };
+</script>
+
+
 {{--<style>--}}
 
     {{--.modal-body img,--}}

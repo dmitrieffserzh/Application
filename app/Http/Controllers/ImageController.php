@@ -35,18 +35,18 @@ class ImageController extends Controller {
             $img->fit(100, 100)->save($destinationPath.DIRECTORY_SEPARATOR.$input['image']);
 
             // NORMAL
-            $destinationPath = public_path('uploads'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'normal');
+            $destinationPath = public_path('uploads'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'normals');
             $img = Image::make($image->getRealPath());
             $img->fit(1000, 1000)->save($destinationPath.DIRECTORY_SEPARATOR.$input['image']);
 
             // COVER
             $destinationPath = public_path('uploads'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'covers');
             $img = Image::make($image->getRealPath());
-            $img->fit(1000, 400);
+            $img->fit(1300, 700);
             $img->blur(60)->save($destinationPath.DIRECTORY_SEPARATOR.$input['image']);
 
             // ORIGINAL
-            $destinationPath = public_path('uploads'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'original');
+            $destinationPath = public_path('uploads'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'originals');
             $image->move($destinationPath, $input['image']);
 
             Profile::find($id)->update(['avatar'=> $input['image']]);
