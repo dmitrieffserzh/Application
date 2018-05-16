@@ -20,7 +20,7 @@ class ImageController extends Controller {
         $id = Auth::id();
 
         $validator = Validator::make($request->all(), [
-            'image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
+            'image' => 'required|image|mimes:jpeg,jpg,png|max:10000000',
         ]);
 
         if ($validator->passes()) {
@@ -55,6 +55,6 @@ class ImageController extends Controller {
         }
 
         return response()->json(['error'=>$validator->errors()->all()]);
-    }
+   }
 
 }

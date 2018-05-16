@@ -1,6 +1,8 @@
 $(document).ready(function () {
     $('#image_input').on('change', function () {
 
+        $('#spinner').addClass('spinner-on');
+
         var form = new FormData();
         var image = $(this)[0].files[0];
         form.append('image', image);
@@ -18,8 +20,15 @@ $(document).ready(function () {
             success: function (msg) {
 
                 $('#image_change').attr('src', '/uploads/images/normals/' + msg.url);
+                $('.bg-profile').css({
+                    'background-image':'url(\'/uploads/images/covers/' + msg.url +'\')',
+                    'background-position': 'center center'
+                });
 
-                console.log(msg);
+                // $.each(msg, function (key, value) {
+                //     $('.bg-profile').text(value);
+                //         });
+
             },
             complete: function (msg) {
 
@@ -30,7 +39,7 @@ $(document).ready(function () {
                 // $.each(msg, function (key, value) {
                 //     $('.print-error-msg').find("ul").append('<li>' + value + '</li>');
                 // });
-
+                $('#spinner').removeClass('spinner-on');
             }
         });
 

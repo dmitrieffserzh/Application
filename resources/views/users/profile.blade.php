@@ -20,19 +20,19 @@
                 <div class="row no-gutters text-center text-md-left">
                     <div class="col-md-auto">
                         <div class="profile-image rounded mt-5 mb-3 m-md-3 ow-h">
-                        <img id="image_change" class="rounded" style="width: 150px; height: 150px;"
-                             src="{{ getImage('normal', $user->profile->avatar) }}"
-                             alt="{{ $user->nickname }}">
-                            <span class="profile-image__spinner">
+                            <img id="image_change" class="rounded" style="width: 150px; height: 150px;"
+                                 src="{{ getImage('normal', $user->profile->avatar) }}"
+                                 alt="{{ $user->nickname }}">
+                            <span id="spinner" class="profile-image__spinner">
 
                                 <svg version="1.1" xmlns="http://www.w3.org/svg/2000" viewBox="0 0 30 30" width="60">
-  <circle cy="15" cx="15" r="14"/>
-</svg>
+                                  <circle cy="15" cx="15" r="14"/>
+                                </svg>
 
                             </span>
-                        @if(Auth::id() == $user->id)
-                            @include('users.partials.image_form')
-                        @endif
+                            @if(Auth::id() == $user->id)
+                                @include('users.partials.image_form')
+                            @endif
                         </div>
                     </div>
 
@@ -104,8 +104,7 @@
             @endif
 
 
-
-			<?php //print_r($post->owner->name); ?>
+            <?php //print_r($post->owner->name); ?>
 
 
             {{--<h4>{{$user->nickname}}</h4>--}}
@@ -133,77 +132,77 @@
     <aside class="col-md-4">
 
 
-            <ul>
-                <li><a href="{{ route('users.list') }}">Пользователи</a></li>
-                <li><a href="{{ route('posts.index') }}">Посты</a></li>
+        <ul>
+            <li><a href="{{ route('users.list') }}">Пользователи</a></li>
+            <li><a href="{{ route('posts.index') }}">Посты</a></li>
 
-                <!-- Authentication Links -->
-                @if (Auth::guest())
-                    <li><a href="{{ route('login') }}">Войти</a></li>
-                    <li><a href="{{ route('register') }}">Регистрация</a></li>
-                @else
-                    <li>
-                        <a href="{{ route('users.profile', Auth::id()) }}">
-                            {{ Auth::user()->nickname }}
-                        </a>
+            <!-- Authentication Links -->
+            @if (Auth::guest())
+                <li><a href="{{ route('login') }}">Войти</a></li>
+                <li><a href="{{ route('register') }}">Регистрация</a></li>
+            @else
+                <li>
+                    <a href="{{ route('users.profile', Auth::id()) }}">
+                        {{ Auth::user()->nickname }}
+                    </a>
 
-                    </li>
+                </li>
 
-                    <li>
-                        <a href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
+                <li>
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
-                            Выйти
-                        </a>
+                        Выйти
+                    </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
-                    </li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </li>
 
-                @endif
-            </ul>
+            @endif
+        </ul>
 
 
     </aside>
 @endsection
 {{--<script>--}}
 
-    {{--var jcrop_api;--}}
+{{--var jcrop_api;--}}
 
-    {{--jQuery(function ($) {--}}
-        {{--var width = jQuery('#target').prop('naturalWidth');--}}
-        {{--var height = jQuery('#target').prop('naturalHeight');--}}
+{{--jQuery(function ($) {--}}
+{{--var width = jQuery('#target').prop('naturalWidth');--}}
+{{--var height = jQuery('#target').prop('naturalHeight');--}}
 
-        {{--jQuery('#target').Jcrop({--}}
-            {{--aspectRatio: 1,--}}
-            {{--onSelect: showPreview,--}}
-            {{--onChange: showPreview,--}}
-            {{--//setSelect: [ 100, 100, 200, 200 ],--}}
+{{--jQuery('#target').Jcrop({--}}
+{{--aspectRatio: 1,--}}
+{{--onSelect: showPreview,--}}
+{{--onChange: showPreview,--}}
+{{--//setSelect: [ 100, 100, 200, 200 ],--}}
 
-            {{--trueSize: [width, height],--}}
-            {{--boxWidth: width,--}}
-            {{--allowResize: true,--}}
-            {{--minSize: [300, 300]--}}
-        {{--});--}}
+{{--trueSize: [width, height],--}}
+{{--boxWidth: width,--}}
+{{--allowResize: true,--}}
+{{--minSize: [300, 300]--}}
+{{--});--}}
 
 
-        {{--var $preview = $('#preview');--}}
-        {{--// Our simple event handler, called from onChange and onSelect--}}
-        {{--// event handlers, as per the Jcrop invocation above--}}
-        {{--function showPreview(coords) {--}}
-            {{--if (parseInt(coords.w) > 0) {--}}
-                {{--var rx = 100 / coords.w;--}}
-                {{--var ry = 100 / coords.h;--}}
+{{--var $preview = $('#preview');--}}
+{{--// Our simple event handler, called from onChange and onSelect--}}
+{{--// event handlers, as per the Jcrop invocation above--}}
+{{--function showPreview(coords) {--}}
+{{--if (parseInt(coords.w) > 0) {--}}
+{{--var rx = 100 / coords.w;--}}
+{{--var ry = 100 / coords.h;--}}
 
-                {{--$preview.css({--}}
-                    {{--width: Math.round(rx * 500) + 'px',--}}
-                    {{--height: Math.round(ry * 370) + 'px',--}}
-                    {{--marginLeft: '-' + Math.round(rx * coords.x) + 'px',--}}
-                    {{--marginTop: '-' + Math.round(ry * coords.y) + 'px'--}}
-                {{--}).show();--}}
-            {{--}--}}
-        {{--}--}}
+{{--$preview.css({--}}
+{{--width: Math.round(rx * 500) + 'px',--}}
+{{--height: Math.round(ry * 370) + 'px',--}}
+{{--marginLeft: '-' + Math.round(rx * coords.x) + 'px',--}}
+{{--marginTop: '-' + Math.round(ry * coords.y) + 'px'--}}
+{{--}).show();--}}
+{{--}--}}
+{{--}--}}
 
-    {{--});--}}
+{{--});--}}
 {{--</script>--}}
