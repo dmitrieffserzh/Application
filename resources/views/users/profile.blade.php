@@ -12,23 +12,23 @@
         background: url('{{ getImage('cover', $user->profile->avatar) }}') no-repeat center center;
         background-size: cover;
         width: 100%;
-        height: 300px
+        height: auto
     }
 </style>
 @section('content')
     <main id="content" class="col-md-8 mb-3 p-0 bg-white rounded shadow ow-h">
-        <section class="section profile">
-            <div class="profile-header bg-profile">
-                <div class="media pb-3 px-3 border-bottom border-gray lh-100">
+        <section class="section profile ow-h">
+            <div class="profile-header">
+                <div class="media pb-3 px-3 border-bottom border-gray lh-100  bg-profile">
                     <span class="d-inline-block position-relative my-5 mx-3">
-                       <img class="rounded-circle" style="width: 200px; height: 200px;"
+                       <img class="rounded-circle" style="width: 150px; height: 150px;"
                             src="{{ getImage('normal', $user->profile->avatar) }}"
                             alt="{{ $user->nickname }}">
                     </span>
                     <div class="media-body align-self-center">
-                        <h1 class="text-white display-4">
+                        <h4 class="text-white">
                             {{ $user->nickname }}
-                        </h1>
+                        </h4>
 
                         @if($user->isOnline())
                             <span class="d-block text-light small lh-125 font-weight-light font-monospace">
@@ -68,37 +68,28 @@
 
 
 
-            <h4>{{$user->nickname}}</h4>
-            @if($user->isOnline())
-                <span class="online"></span>
-            @else
-                <span class="offline"></span>
-                {{ getOnlineTime($user->profile->sex, $user->profile->offline_at->diffForHumans()) }}
-            @endif
+            {{--<h4>{{$user->nickname}}</h4>--}}
+            {{--@if($user->isOnline())--}}
+                {{--<span class="online"></span>--}}
+            {{--@else--}}
+                {{--<span class="offline"></span>--}}
+                {{--{{ getOnlineTime($user->profile->sex, $user->profile->offline_at->diffForHumans()) }}--}}
+            {{--@endif--}}
 
-            @if ($user->id == Auth::id())
-                <a href="{{ route('users.profile.edit', $user->id) }}" title="Изменить профиль"
-                   class="pull-right">
-                    Изменить профиль
-                </a>
-            @endif
+            {{--@if ($user->id == Auth::id())--}}
+                {{--<a href="{{ route('users.profile.edit', $user->id) }}" title="Изменить профиль"--}}
+                   {{--class="pull-right">--}}
+                    {{--Изменить профиль--}}
+                {{--</a>--}}
+            {{--@endif--}}
 
 
-        <hr>
-        <hr>
-        <div>Имя: {{$user->profile->name}}</div>
-        <hr>
-        <div>фамилия: {{$user->profile->surname}}</div>
-        <hr>
-        <div>Пол: {{ getSex($user->profile->sex) }}</div>
-        <hr>
-        <div>Город: {{$user->profile->city}}</div>
-        <hr>
-        <div>Телефон: {{$user->profile->phone}}</div>
-        <hr>
-        <div>Обомне: {{$user->profile->about_user}}</div>
-        <hr>
-        <div>Зарегистрирован: {{ $user->profile->created_at->diffForHumans() }}</div>
+        <div class="p-3 border-top border-gray">фамилия: {{$user->profile->surname}}</div>
+        <div class="p-3 border-top border-gray">Пол: {{ getSex($user->profile->sex) }}</div>
+        <div class="p-3 border-top border-gray">Город: {{$user->profile->city}}</div>
+        <div class="p-3 border-top border-gray">Телефон: {{$user->profile->phone}}</div>
+        <div class="p-3 border-top border-gray">Обомне: {{$user->profile->about_user}}</div>
+        <div class="p-3 border-top border-gray">Зарегистрирован: {{ $user->profile->created_at->diffForHumans() }}</div>
 
 
         </section>

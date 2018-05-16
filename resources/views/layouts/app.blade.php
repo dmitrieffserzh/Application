@@ -26,6 +26,12 @@
     <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white shadow">
         <div class="container">
             <span class="navbar-brand mb-0 h1"  style="font-weight:900;">LOGO</span>
+
+            <button type="button" class="main-menu__button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
         </div>
     </nav>
     <div class="container">

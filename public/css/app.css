@@ -10575,7 +10575,7 @@ a.text-dark:focus {
 }
 
 body {
-  padding-top: 90px;
+  padding-top: 74px;
 }
 
 .lh-100 {
@@ -10588,6 +10588,41 @@ body {
 
 .ow-h {
   overflow: hidden;
+}
+
+.main-menu__button {
+  float: right;
+  position: relative;
+  background: transparent;
+  border: none;
+  padding-right: 0;
+  outline: none;
+  z-index: 100;
+}
+
+.main-menu__button .icon-bar {
+  display: block;
+  background: #000;
+  margin: 4px 0;
+  width: 25px;
+  height: 2px;
+}
+
+.footer {
+  min-height: 500px;
+}
+
+.article-content p {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  margin-bottom: 0;
+}
+
+.article-content img {
+  width: 100%;
+  height: auto;
 }
 
 .component-like__count {
