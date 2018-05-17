@@ -10,7 +10,10 @@
 window.$ = window.jQuery = require('jquery');
 //window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
 //require('./bootstrap');
-require('./jq_swipe-detect');
+//require('./jq_swipe-detect');
+//require('./components/util.js');
+require('./components/modal.js');
+require('./components/modal-ajax.js');
 
 
 /**

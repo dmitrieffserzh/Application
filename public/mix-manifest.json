@@ -1,4 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/components/modal.js": "/js/components/modal.js",
+    "/js/components/util.js": "/js/components/util.js",
+    "/js/components/modal-ajax.js": "/js/components/modal-ajax.js"
 }

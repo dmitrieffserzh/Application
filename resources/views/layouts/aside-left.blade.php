@@ -77,7 +77,7 @@
         {{--@endif--}}
         {{--<!-- Authentication Links -->--}}
         {{--@if (Auth::guest())--}}
-        {{--<li class="main-menu__item"><a href="{{ route('login') }}" class="main-menu__link">Войти</a>--}}
+        {{--<li class="main-menu__item"><a href="{{ route('login') }}" class="ajax-modal main-menu__link" data-toggle="modal" data-url="{{ route('login') }}" data-name="Войти" data-modal-size="modal-sm">Войти</a>--}}
         {{--</li>--}}
         {{--<li class="main-menu__item"><a href="{{ route('register') }}" class="main-menu__link">Регистрация</a>--}}
         {{--</li>--}}
@@ -120,8 +120,15 @@
     </div>
 </div>
 
+{{-- footer --}}
 <footer class="footer">
-    {{--footer--}}
+
 </footer>
+
+{{-- Modal --}}
+<div id="modal-container" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document"></div>
+</div>
+
 </body>
 </html>

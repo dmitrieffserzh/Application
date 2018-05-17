@@ -60,41 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(1);
-module.exports = __webpack_require__(4);
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-window.$ = window.jQuery = __webpack_require__(2);
-//window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
-//require('./bootstrap');
-__webpack_require__(3);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10465,960 +10435,864 @@ return jQuery;
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/*!
- * jQuery Mobile Events
- * by Ben Major
- *
- * Copyright 2011-2017, Ben Major
- * Licensed under the MIT License:
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+
+
+/**
+ * --------------------------------------------------------------------------
+ * Bootstrap (v4.1.1): util.js
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * --------------------------------------------------------------------------
  */
 
+var Util = function ($) {
+  /**
+   * ------------------------------------------------------------------------
+   * Private TransitionEnd Helpers
+   * ------------------------------------------------------------------------
+   */
 
+  var TRANSITION_END = 'transitionend';
+  var MAX_UID = 1000000;
+  var MILLISECONDS_MULTIPLIER = 1000;
 
-(function ($) {
-    $.attrFn = $.attrFn || {};
+  // Shoutout AngusCroll (https://goo.gl/pxwQGp)
+  function toType(obj) {
+    return {}.toString.call(obj).match(/\s([a-z]+)/i)[1].toLowerCase();
+  }
 
-    // navigator.userAgent.toLowerCase() isn't reliable for Chrome installs
-    // on mobile devices. As such, we will create a boolean isChromeDesktop
-    // The reason that we need to do this is because Chrome annoyingly
-    // purports support for touch events even if the underlying hardware
-    // does not!
-    var touchCapable = 'ontouchstart' in window,
-        settings = {
-        tap_pixel_range: 5,
-        swipe_h_threshold: 50,
-        swipe_v_threshold: 50,
-        taphold_threshold: 750,
-        doubletap_int: 500,
-
-        touch_capable: touchCapable,
-        orientation_support: 'orientation' in window && 'onorientationchange' in window,
-
-        startevent: touchCapable ? 'touchstart' : 'mousedown',
-        endevent: touchCapable ? 'touchend' : 'mouseup',
-        moveevent: touchCapable ? 'touchmove' : 'mousemove',
-        tapevent: touchCapable ? 'tap' : 'click',
-        scrollevent: touchCapable ? 'touchmove' : 'scroll',
-
-        hold_timer: null,
-        tap_timer: null
+  function getSpecialTransitionEndEvent() {
+    return {
+      bindType: TRANSITION_END,
+      delegateType: TRANSITION_END,
+      handle: function handle(event) {
+        if ($(event.target).is(this)) {
+          return event.handleObj.handler.apply(this, arguments); // eslint-disable-line prefer-rest-params
+        }
+        return undefined; // eslint-disable-line no-undefined
+      }
     };
+  }
 
-    // Convenience functions:
-    $.isTouchCapable = function () {
-        return settings.touch_capable;
-    };
-    $.getStartEvent = function () {
-        return settings.startevent;
-    };
-    $.getEndEvent = function () {
-        return settings.endevent;
-    };
-    $.getMoveEvent = function () {
-        return settings.moveevent;
-    };
-    $.getTapEvent = function () {
-        return settings.tapevent;
-    };
-    $.getScrollEvent = function () {
-        return settings.scrollevent;
-    };
+  function transitionEndEmulator(duration) {
+    var _this = this;
 
-    // Add Event shortcuts:
-    $.each(['tapstart', 'tapend', 'tapmove', 'tap', 'tap2', 'tap3', 'tap4', 'singletap', 'doubletap', 'taphold', 'swipe', 'swipeup', 'swiperight', 'swipedown', 'swipeleft', 'swipeend', 'scrollstart', 'scrollend', 'orientationchange'], function (i, name) {
-        $.fn[name] = function (fn) {
-            return fn ? this.on(name, fn) : this.trigger(name);
-        };
+    var called = false;
 
-        $.attrFn[name] = true;
+    $(this).one(Util.TRANSITION_END, function () {
+      called = true;
     });
 
-    // tapstart Event:
-    $.event.special.tapstart = {
-        setup: function setup() {
-
-            var thisObject = this,
-                $this = $(thisObject);
-
-            function tapStartFunc(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                if (e.which && e.which !== 1) {
-                    return false;
-                }
-
-                var origEvent = e.originalEvent,
-                    touchData = {
-                    'position': {
-                        'x': settings.touch_capable ? origEvent.touches[0].screenX : e.screenX,
-                        'y': settings.touch_capable ? origEvent.touches[0].screenY : e.screenY
-                    },
-                    'offset': {
-                        'x': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageX - ($this.offset() ? $this.offset().left : 0)) : Math.round(e.pageX - ($this.offset() ? $this.offset().left : 0)),
-                        'y': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageY - ($this.offset() ? $this.offset().top : 0)) : Math.round(e.pageY - ($this.offset() ? $this.offset().top : 0))
-                    },
-                    'time': Date.now(),
-                    'target': e.target
-                };
-
-                triggerCustomEvent(thisObject, 'tapstart', e, touchData);
-                return true;
-            };
-
-            $this.on(settings.startevent, $this.data.tapStartFunc = tapStartFunc);
-        },
-
-        remove: function remove() {
-            $(this).off(settings.startevent, $(this).data.tapStartFunc);
-        }
-    };
-
-    // tapmove Event:
-    $.event.special.tapmove = {
-        setup: function setup() {
-            var thisObject = this,
-                $this = $(thisObject);
-
-            function tapMoveFunc(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                var origEvent = e.originalEvent,
-                    touchData = {
-                    'position': {
-                        'x': settings.touch_capable ? origEvent.touches[0].screenX : e.screenX,
-                        'y': settings.touch_capable ? origEvent.touches[0].screenY : e.screenY
-                    },
-                    'offset': {
-                        'x': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageX - ($this.offset() ? $this.offset().left : 0)) : Math.round(e.pageX - ($this.offset() ? $this.offset().left : 0)),
-                        'y': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageY - ($this.offset() ? $this.offset().top : 0)) : Math.round(e.pageY - ($this.offset() ? $this.offset().top : 0))
-                    },
-                    'time': Date.now(),
-                    'target': e.target
-                };
-
-                triggerCustomEvent(thisObject, 'tapmove', e, touchData);
-                return true;
-            }
-
-            $this.on(settings.moveevent, $this.data.tapMoveFunc = tapMoveFunc);
-        },
-        remove: function remove() {
-            $(this).off(settings.moveevent, $(this).data.tapMoveFunc);
-        }
-    };
-
-    // tapend Event:
-    $.event.special.tapend = {
-        setup: function setup() {
-            var thisObject = this,
-                $this = $(thisObject);
-
-            function tapEndFunc(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                var origEvent = e.originalEvent;
-                var touchData = {
-                    'position': {
-                        'x': settings.touch_capable ? origEvent.changedTouches[0].screenX : e.screenX,
-                        'y': settings.touch_capable ? origEvent.changedTouches[0].screenY : e.screenY
-                    },
-                    'offset': {
-                        'x': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageX - ($this.offset() ? $this.offset().left : 0)) : Math.round(e.pageX - ($this.offset() ? $this.offset().left : 0)),
-                        'y': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageY - ($this.offset() ? $this.offset().top : 0)) : Math.round(e.pageY - ($this.offset() ? $this.offset().top : 0))
-                    },
-                    'time': Date.now(),
-                    'target': e.target
-                };
-                triggerCustomEvent(thisObject, 'tapend', e, touchData);
-                return true;
-            }
-
-            $this.on(settings.endevent, $this.data.tapEndFunc = tapEndFunc);
-        },
-        remove: function remove() {
-            $(this).off(settings.endevent, $(this).data.tapEndFunc);
-        }
-    };
-
-    // taphold Event:
-    $.event.special.taphold = {
-        setup: function setup() {
-            var thisObject = this,
-                $this = $(thisObject),
-                origTarget,
-                start_pos = {
-                x: 0,
-                y: 0
-            },
-                end_x = 0,
-                end_y = 0;
-
-            function tapHoldFunc1(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                if (e.which && e.which !== 1) {
-                    return false;
-                } else {
-                    $this.data('tapheld', false);
-                    origTarget = e.target;
-
-                    var origEvent = e.originalEvent;
-                    var start_time = Date.now(),
-                        startPosition = {
-                        'x': settings.touch_capable ? origEvent.touches[0].screenX : e.screenX,
-                        'y': settings.touch_capable ? origEvent.touches[0].screenY : e.screenY
-                    },
-                        startOffset = {
-                        'x': settings.touch_capable ? origEvent.touches[0].pageX - origEvent.touches[0].target.offsetLeft : e.offsetX,
-                        'y': settings.touch_capable ? origEvent.touches[0].pageY - origEvent.touches[0].target.offsetTop : e.offsetY
-                    };
-
-                    start_pos.x = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageX : e.pageX;
-                    start_pos.y = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageY : e.pageY;
-
-                    end_x = start_pos.x;
-                    end_y = start_pos.y;
-
-                    // Get the element's threshold:
-
-                    var ele_threshold = $this.parent().data('threshold') ? $this.parent().data('threshold') : $this.data('threshold'),
-                        threshold = typeof ele_threshold !== 'undefined' && ele_threshold !== false && parseInt(ele_threshold) ? parseInt(ele_threshold) : settings.taphold_threshold;
-
-                    settings.hold_timer = window.setTimeout(function () {
-
-                        var diff_x = start_pos.x - end_x,
-                            diff_y = start_pos.y - end_y;
-
-                        if (e.target == origTarget && (start_pos.x == end_x && start_pos.y == end_y || diff_x >= -settings.tap_pixel_range && diff_x <= settings.tap_pixel_range && diff_y >= -settings.tap_pixel_range && diff_y <= settings.tap_pixel_range)) {
-                            $this.data('tapheld', true);
-
-                            var end_time = Date.now(),
-                                endPosition = {
-                                'x': settings.touch_capable ? origEvent.touches[0].screenX : e.screenX,
-                                'y': settings.touch_capable ? origEvent.touches[0].screenY : e.screenY
-                            },
-                                endOffset = {
-                                'x': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageX - ($this.offset() ? $this.offset().left : 0)) : Math.round(e.pageX - ($this.offset() ? $this.offset().left : 0)),
-                                'y': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageY - ($this.offset() ? $this.offset().top : 0)) : Math.round(e.pageY - ($this.offset() ? $this.offset().top : 0))
-                            };
-                            var duration = end_time - start_time;
-
-                            // Build the touch data:
-                            var touchData = {
-                                'startTime': start_time,
-                                'endTime': end_time,
-                                'startPosition': startPosition,
-                                'startOffset': startOffset,
-                                'endPosition': endPosition,
-                                'endOffset': endOffset,
-                                'duration': duration,
-                                'target': e.target
-                            };
-                            triggerCustomEvent(thisObject, 'taphold', e, touchData);
-                        }
-                    }, threshold);
-
-                    return true;
-                }
-            }
-
-            function tapHoldFunc2() {
-                $this.data('tapheld', false);
-                window.clearTimeout(settings.hold_timer);
-            }
-
-            function tapHoldFunc3(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                end_x = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageX : e.pageX;
-                end_y = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageY : e.pageY;
-            }
-
-            $this.on(settings.startevent, $this.data.tapHoldFunc1 = tapHoldFunc1).on(settings.endevent, $this.data.tapHoldFunc2 = tapHoldFunc2).on(settings.moveevent, $this.data.tapHoldFunc3 = tapHoldFunc3);
-        },
-
-        remove: function remove() {
-            $(this).off(settings.startevent, $(this).data.tapHoldFunc1).off(settings.endevent, $(this).data.tapHoldFunc2).off(settings.moveevent, $(this).data.tapHoldFunc3);
-        }
-    };
-
-    // doubletap Event:
-    $.event.special.doubletap = {
-        setup: function setup() {
-            var thisObject = this,
-                $this = $(thisObject),
-                origTarget,
-                action,
-                firstTap = null,
-                origEvent,
-                cooloff,
-                cooling = false;
-
-            function doubleTapFunc1(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                if (e.which && e.which !== 1) {
-                    return false;
-                }
-
-                $this.data('doubletapped', false);
-                origTarget = e.target;
-
-                origEvent = e.originalEvent;
-                if (!firstTap) {
-                    firstTap = {
-                        'position': {
-                            'x': settings.touch_capable ? origEvent.touches[0].screenX : e.screenX,
-                            'y': settings.touch_capable ? origEvent.touches[0].screenY : e.screenY
-                        },
-                        'offset': {
-                            'x': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageX - ($this.offset() ? $this.offset().left : 0)) : Math.round(e.pageX - ($this.offset() ? $this.offset().left : 0)),
-                            'y': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageY - ($this.offset() ? $this.offset().top : 0)) : Math.round(e.pageY - ($this.offset() ? $this.offset().top : 0))
-                        },
-                        'time': Date.now(),
-                        'target': e.target,
-                        'element': e.originalEvent.srcElement,
-                        'index': $(e.target).index()
-                    };
-                }
-
-                return true;
-            }
-
-            function doubleTapFunc2(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                var now = Date.now();
-                var lastTouch = $this.data('lastTouch') || now + 1;
-                var delta = now - lastTouch;
-                window.clearTimeout(action);
-
-                if (delta < settings.doubletap_int && $(e.target).index() == firstTap.index && delta > 100) {
-                    $this.data('doubletapped', true);
-                    window.clearTimeout(settings.tap_timer);
-
-                    // Now get the current event:
-                    var lastTap = {
-                        'position': {
-                            'x': settings.touch_capable ? e.originalEvent.changedTouches[0].screenX : e.screenX,
-                            'y': settings.touch_capable ? e.originalEvent.changedTouches[0].screenY : e.screenY
-                        },
-                        'offset': {
-                            'x': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageX - ($this.offset() ? $this.offset().left : 0)) : Math.round(e.pageX - ($this.offset() ? $this.offset().left : 0)),
-                            'y': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageY - ($this.offset() ? $this.offset().top : 0)) : Math.round(e.pageY - ($this.offset() ? $this.offset().top : 0))
-                        },
-                        'time': Date.now(),
-                        'target': e.target,
-                        'element': e.originalEvent.srcElement,
-                        'index': $(e.target).index()
-                    };
-
-                    var touchData = {
-                        'firstTap': firstTap,
-                        'secondTap': lastTap,
-                        'interval': lastTap.time - firstTap.time
-                    };
-
-                    if (!cooling) {
-                        triggerCustomEvent(thisObject, 'doubletap', e, touchData);
-                        firstTap = null;
-                    }
-
-                    cooling = true;
-
-                    cooloff = window.setTimeout(function () {
-                        cooling = false;
-                    }, settings.doubletap_int);
-                } else {
-                    $this.data('lastTouch', now);
-                    action = window.setTimeout(function () {
-                        firstTap = null;
-                        window.clearTimeout(action);
-                    }, settings.doubletap_int, [e]);
-                }
-                $this.data('lastTouch', now);
-            }
-
-            $this.on(settings.startevent, $this.data.doubleTapFunc1 = doubleTapFunc1).on(settings.endevent, $this.data.doubleTapFunc2 = doubleTapFunc2);
-        },
-        remove: function remove() {
-            $(this).off(settings.startevent, $(this).data.doubleTapFunc1).off(settings.endevent, $(this).data.doubleTapFunc2);
-        }
-    };
-
-    // singletap Event:
-    // This is used in conjuction with doubletap when both events are needed on the same element
-    $.event.special.singletap = {
-        setup: function setup() {
-            var thisObject = this,
-                $this = $(thisObject),
-                origTarget = null,
-                startTime = null,
-                start_pos = {
-                x: 0,
-                y: 0
-            };
-
-            function singleTapFunc1(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                if (e.which && e.which !== 1) {
-                    return false;
-                } else {
-                    startTime = Date.now();
-                    origTarget = e.target;
-
-                    // Get the start x and y position:
-                    start_pos.x = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageX : e.pageX;
-                    start_pos.y = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageY : e.pageY;
-
-                    return true;
-                }
-            }
-
-            function singleTapFunc2(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                if (e.target == origTarget) {
-
-                    // Get the end point:
-                    var end_pos_x = e.originalEvent.changedTouches ? e.originalEvent.changedTouches[0].pageX : e.pageX,
-                        end_pos_y = e.originalEvent.changedTouches ? e.originalEvent.changedTouches[0].pageY : e.pageY;
-
-                    // We need to check if it was a taphold:
-
-                    settings.tap_timer = window.setTimeout(function () {
-
-                        var diff_x = start_pos.x - end_pos_x,
-                            diff_y = start_pos.y - end_pos_y;
-
-                        if (!$this.data('doubletapped') && !$this.data('tapheld') && (start_pos.x == end_pos_x && start_pos.y == end_pos_y || diff_x >= -settings.tap_pixel_range && diff_x <= settings.tap_pixel_range && diff_y >= -settings.tap_pixel_range && diff_y <= settings.tap_pixel_range)) {
-
-                            var origEvent = e.originalEvent;
-                            var touchData = {
-                                'position': {
-                                    'x': settings.touch_capable ? origEvent.changedTouches[0].screenX : e.screenX,
-                                    'y': settings.touch_capable ? origEvent.changedTouches[0].screenY : e.screenY
-                                },
-                                'offset': {
-                                    'x': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageX - ($this.offset() ? $this.offset().left : 0)) : Math.round(e.pageX - ($this.offset() ? $this.offset().left : 0)),
-                                    'y': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageY - ($this.offset() ? $this.offset().top : 0)) : Math.round(e.pageY - ($this.offset() ? $this.offset().top : 0))
-                                },
-                                'time': Date.now(),
-                                'target': e.target
-                            };
-
-                            // Was it a taphold?
-                            if (touchData.time - startTime < settings.taphold_threshold) {
-                                triggerCustomEvent(thisObject, 'singletap', e, touchData);
-                            }
-                        }
-                    }, settings.doubletap_int);
-                }
-            }
-
-            $this.on(settings.startevent, $this.data.singleTapFunc1 = singleTapFunc1).on(settings.endevent, $this.data.singleTapFunc2 = singleTapFunc2);
-        },
-
-        remove: function remove() {
-            $(this).off(settings.startevent, $(this).data.singleTapFunc1).off(settings.endevent, $(this).data.singleTapFunc2);
-        }
-    };
-
-    // tap Event:
-    $.event.special.tap = {
-        setup: function setup() {
-            var thisObject = this,
-                $this = $(thisObject),
-                started = false,
-                origTarget = null,
-                start_time,
-                start_pos = {
-                x: 0,
-                y: 0
-            },
-                touches;
-
-            function tapFunc1(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                if (e.which && e.which !== 1) {
-                    return false;
-                } else {
-                    started = true;
-                    start_pos.x = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageX : e.pageX;
-                    start_pos.y = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageY : e.pageY;
-                    start_time = Date.now();
-                    origTarget = e.target;
-
-                    touches = e.originalEvent.targetTouches ? e.originalEvent.targetTouches : [e];
-                    return true;
-                }
-            }
-
-            function tapFunc2(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                // Only trigger if they've started, and the target matches:
-                var end_x = e.originalEvent.targetTouches ? e.originalEvent.changedTouches[0].pageX : e.pageX,
-                    end_y = e.originalEvent.targetTouches ? e.originalEvent.changedTouches[0].pageY : e.pageY,
-                    diff_x = start_pos.x - end_x,
-                    diff_y = start_pos.y - end_y,
-                    eventName;
-
-                if (origTarget == e.target && started && Date.now() - start_time < settings.taphold_threshold && (start_pos.x == end_x && start_pos.y == end_y || diff_x >= -settings.tap_pixel_range && diff_x <= settings.tap_pixel_range && diff_y >= -settings.tap_pixel_range && diff_y <= settings.tap_pixel_range)) {
-                    var origEvent = e.originalEvent;
-                    var touchData = [];
-
-                    for (var i = 0; i < touches.length; i++) {
-                        var touch = {
-                            'position': {
-                                'x': settings.touch_capable ? origEvent.changedTouches[i].screenX : e.screenX,
-                                'y': settings.touch_capable ? origEvent.changedTouches[i].screenY : e.screenY
-                            },
-                            'offset': {
-                                'x': settings.touch_capable ? Math.round(origEvent.changedTouches[i].pageX - ($this.offset() ? $this.offset().left : 0)) : Math.round(e.pageX - ($this.offset() ? $this.offset().left : 0)),
-                                'y': settings.touch_capable ? Math.round(origEvent.changedTouches[i].pageY - ($this.offset() ? $this.offset().top : 0)) : Math.round(e.pageY - ($this.offset() ? $this.offset().top : 0))
-                            },
-                            'time': Date.now(),
-                            'target': e.target
-                        };
-
-                        touchData.push(touch);
-                    }
-
-                    triggerCustomEvent(thisObject, 'tap', e, touchData);
-                }
-            }
-
-            $this.on(settings.startevent, $this.data.tapFunc1 = tapFunc1).on(settings.endevent, $this.data.tapFunc2 = tapFunc2);
-        },
-
-        remove: function remove() {
-            $(this).off(settings.startevent, $(this).data.tapFunc1).off(settings.endevent, $(this).data.tapFunc2);
-        }
-    };
-
-    // swipe Event (also handles swipeup, swiperight, swipedown and swipeleft):
-    $.event.special.swipe = {
-        setup: function setup() {
-            var thisObject = this,
-                $this = $(thisObject),
-                started = false,
-                hasSwiped = false,
-                originalCoord = {
-                x: 0,
-                y: 0
-            },
-                finalCoord = {
-                x: 0,
-                y: 0
-            },
-                startEvnt;
-
-            // Screen touched, store the original coordinate
-
-            function touchStart(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                $this = $(e.currentTarget);
-                originalCoord.x = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageX : e.pageX;
-                originalCoord.y = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageY : e.pageY;
-                finalCoord.x = originalCoord.x;
-                finalCoord.y = originalCoord.y;
-                started = true;
-                var origEvent = e.originalEvent;
-                // Read event data into our startEvt:
-                startEvnt = {
-                    'position': {
-                        'x': settings.touch_capable ? origEvent.touches[0].screenX : e.screenX,
-                        'y': settings.touch_capable ? origEvent.touches[0].screenY : e.screenY
-                    },
-                    'offset': {
-                        'x': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageX - ($this.offset() ? $this.offset().left : 0)) : Math.round(e.pageX - ($this.offset() ? $this.offset().left : 0)),
-                        'y': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageY - ($this.offset() ? $this.offset().top : 0)) : Math.round(e.pageY - ($this.offset() ? $this.offset().top : 0))
-                    },
-                    'time': Date.now(),
-                    'target': e.target
-                };
-            }
-
-            // Store coordinates as finger is swiping
-
-            function touchMove(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                $this = $(e.currentTarget);
-                finalCoord.x = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageX : e.pageX;
-                finalCoord.y = e.originalEvent.targetTouches ? e.originalEvent.targetTouches[0].pageY : e.pageY;
-
-                var swipedir;
-
-                // We need to check if the element to which the event was bound contains a data-xthreshold | data-vthreshold:
-                var ele_x_threshold = $this.parent().data('xthreshold') ? $this.parent().data('xthreshold') : $this.data('xthreshold'),
-                    ele_y_threshold = $this.parent().data('ythreshold') ? $this.parent().data('ythreshold') : $this.data('ythreshold'),
-                    h_threshold = typeof ele_x_threshold !== 'undefined' && ele_x_threshold !== false && parseInt(ele_x_threshold) ? parseInt(ele_x_threshold) : settings.swipe_h_threshold,
-                    v_threshold = typeof ele_y_threshold !== 'undefined' && ele_y_threshold !== false && parseInt(ele_y_threshold) ? parseInt(ele_y_threshold) : settings.swipe_v_threshold;
-
-                if (originalCoord.y > finalCoord.y && originalCoord.y - finalCoord.y > v_threshold) {
-                    swipedir = 'swipeup';
-                }
-                if (originalCoord.x < finalCoord.x && finalCoord.x - originalCoord.x > h_threshold) {
-                    swipedir = 'swiperight';
-                }
-                if (originalCoord.y < finalCoord.y && finalCoord.y - originalCoord.y > v_threshold) {
-                    swipedir = 'swipedown';
-                }
-                if (originalCoord.x > finalCoord.x && originalCoord.x - finalCoord.x > h_threshold) {
-                    swipedir = 'swipeleft';
-                }
-                if (swipedir != undefined && started) {
-                    originalCoord.x = 0;
-                    originalCoord.y = 0;
-                    finalCoord.x = 0;
-                    finalCoord.y = 0;
-                    started = false;
-
-                    // Read event data into our endEvnt:
-                    var origEvent = e.originalEvent;
-                    var endEvnt = {
-                        'position': {
-                            'x': settings.touch_capable ? origEvent.touches[0].screenX : e.screenX,
-                            'y': settings.touch_capable ? origEvent.touches[0].screenY : e.screenY
-                        },
-                        'offset': {
-                            'x': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageX - ($this.offset() ? $this.offset().left : 0)) : Math.round(e.pageX - ($this.offset() ? $this.offset().left : 0)),
-                            'y': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageY - ($this.offset() ? $this.offset().top : 0)) : Math.round(e.pageY - ($this.offset() ? $this.offset().top : 0))
-                        },
-                        'time': Date.now(),
-                        'target': e.target
-                    };
-
-                    // Calculate the swipe amount (normalized):
-                    var xAmount = Math.abs(startEvnt.position.x - endEvnt.position.x),
-                        yAmount = Math.abs(startEvnt.position.y - endEvnt.position.y);
-
-                    var touchData = {
-                        'startEvnt': startEvnt,
-                        'endEvnt': endEvnt,
-                        'direction': swipedir.replace('swipe', ''),
-                        'xAmount': xAmount,
-                        'yAmount': yAmount,
-                        'duration': endEvnt.time - startEvnt.time
-                    };
-                    hasSwiped = true;
-                    $this.trigger('swipe', touchData).trigger(swipedir, touchData);
-                }
-            }
-
-            function touchEnd(e) {
-                if (!e.originalEvent) {
-                    return;
-                }
-
-                $this = $(e.currentTarget);
-                var swipedir = "";
-                if (hasSwiped) {
-                    // We need to check if the element to which the event was bound contains a data-xthreshold | data-vthreshold:
-                    var ele_x_threshold = $this.data('xthreshold'),
-                        ele_y_threshold = $this.data('ythreshold'),
-                        h_threshold = typeof ele_x_threshold !== 'undefined' && ele_x_threshold !== false && parseInt(ele_x_threshold) ? parseInt(ele_x_threshold) : settings.swipe_h_threshold,
-                        v_threshold = typeof ele_y_threshold !== 'undefined' && ele_y_threshold !== false && parseInt(ele_y_threshold) ? parseInt(ele_y_threshold) : settings.swipe_v_threshold;
-
-                    var origEvent = e.originalEvent;
-                    var endEvnt = {
-                        'position': {
-                            'x': settings.touch_capable ? origEvent.changedTouches[0].screenX : e.screenX,
-                            'y': settings.touch_capable ? origEvent.changedTouches[0].screenY : e.screenY
-                        },
-                        'offset': {
-                            'x': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageX - ($this.offset() ? $this.offset().left : 0)) : Math.round(e.pageX - ($this.offset() ? $this.offset().left : 0)),
-                            'y': settings.touch_capable ? Math.round(origEvent.changedTouches[0].pageY - ($this.offset() ? $this.offset().top : 0)) : Math.round(e.pageY - ($this.offset() ? $this.offset().top : 0))
-                        },
-                        'time': Date.now(),
-                        'target': e.target
-                    };
-
-                    // Read event data into our endEvnt:
-                    if (startEvnt.position.y > endEvnt.position.y && startEvnt.position.y - endEvnt.position.y > v_threshold) {
-                        swipedir = 'swipeup';
-                    }
-                    if (startEvnt.position.x < endEvnt.position.x && endEvnt.position.x - startEvnt.position.x > h_threshold) {
-                        swipedir = 'swiperight';
-                    }
-                    if (startEvnt.position.y < endEvnt.position.y && endEvnt.position.y - startEvnt.position.y > v_threshold) {
-                        swipedir = 'swipedown';
-                    }
-                    if (startEvnt.position.x > endEvnt.position.x && startEvnt.position.x - endEvnt.position.x > h_threshold) {
-                        swipedir = 'swipeleft';
-                    }
-
-                    // Calculate the swipe amount (normalized):
-                    var xAmount = Math.abs(startEvnt.position.x - endEvnt.position.x),
-                        yAmount = Math.abs(startEvnt.position.y - endEvnt.position.y);
-
-                    var touchData = {
-                        'startEvnt': startEvnt,
-                        'endEvnt': endEvnt,
-                        'direction': swipedir.replace('swipe', ''),
-                        'xAmount': xAmount,
-                        'yAmount': yAmount,
-                        'duration': endEvnt.time - startEvnt.time
-                    };
-                    $this.trigger('swipeend', touchData);
-                }
-
-                started = false;
-                hasSwiped = false;
-            }
-
-            $this.on(settings.startevent, $this.data.touchStart = touchStart);
-            $this.on(settings.moveevent, $this.data.touchMove = touchMove);
-            $this.on(settings.endevent, $this.data.touchEnd = touchEnd);
-        },
-
-        remove: function remove() {
-            $(this).off(settings.startevent, $(this).data.touchStart).off(settings.moveevent, $(this).data.touchMove).off(settings.endevent, $(this).data.touchEnd);
-        }
-    };
-
-    // scrollstart Event (also handles scrollend):
-    $.event.special.scrollstart = {
-        setup: function setup() {
-            var thisObject = this,
-                $this = $(thisObject),
-                scrolling,
-                timer;
-
-            function trigger(event, state) {
-                scrolling = state;
-                triggerCustomEvent(thisObject, scrolling ? 'scrollstart' : 'scrollend', event);
-            }
-
-            // iPhone triggers scroll after a small delay; use touchmove instead
-            function scrollFunc(event) {
-                if (!scrolling) {
-                    trigger(event, true);
-                }
-
-                clearTimeout(timer);
-                timer = setTimeout(function () {
-                    trigger(event, false);
-                }, 50);
-            }
-
-            $this.on(settings.scrollevent, $this.data.scrollFunc = scrollFunc);
-        },
-
-        remove: function remove() {
-            $(this).off(settings.scrollevent, $(this).data.scrollFunc);
-        }
-    };
-
-    // This is the orientation change (largely borrowed from jQuery Mobile):
-    var win = $(window),
-        special_event,
-        get_orientation,
-        last_orientation,
-        initial_orientation_is_landscape,
-        initial_orientation_is_default,
-        portrait_map = {
-        '0': true,
-        '180': true
-    };
-
-    if (settings.orientation_support) {
-        var ww = window.innerWidth || win.width(),
-            wh = window.innerHeight || win.height(),
-            landscape_threshold = 50;
-
-        initial_orientation_is_landscape = ww > wh && ww - wh > landscape_threshold;
-        initial_orientation_is_default = portrait_map[window.orientation];
-
-        if (initial_orientation_is_landscape && initial_orientation_is_default || !initial_orientation_is_landscape && !initial_orientation_is_default) {
-            portrait_map = {
-                '-90': true,
-                '90': true
-            };
-        }
-    }
-
-    $.event.special.orientationchange = special_event = {
-        setup: function setup() {
-            // If the event is supported natively, return false so that jQuery
-            // will on to the event using DOM methods.
-            if (settings.orientation_support) {
-                return false;
-            }
-
-            // Get the current orientation to avoid initial double-triggering.
-            last_orientation = get_orientation();
-
-            win.on('throttledresize', handler);
-            return true;
-        },
-        teardown: function teardown() {
-            if (settings.orientation_support) {
-                return false;
-            }
-
-            win.off('throttledresize', handler);
-            return true;
-        },
-        add: function add(handleObj) {
-            // Save a reference to the bound event handler.
-            var old_handler = handleObj.handler;
-
-            handleObj.handler = function (event) {
-                event.orientation = get_orientation();
-                return old_handler.apply(this, arguments);
-            };
-        }
-    };
-
-    // If the event is not supported natively, this handler will be bound to
-    // the window resize event to simulate the orientationchange event.
-
-    function handler() {
-        // Get the current orientation.
-        var orientation = get_orientation();
-
-        if (orientation !== last_orientation) {
-            // The orientation has changed, so trigger the orientationchange event.
-            last_orientation = orientation;
-            win.trigger("orientationchange");
-        }
-    }
-
-    $.event.special.orientationchange.orientation = get_orientation = function get_orientation() {
-        var isPortrait = true,
-            elem = document.documentElement;
-
-        if (settings.orientation_support) {
-            isPortrait = portrait_map[window.orientation];
-        } else {
-            isPortrait = elem && elem.clientWidth / elem.clientHeight < 1.1;
-        }
-
-        return isPortrait ? 'portrait' : 'landscape';
-    };
-
-    // throttle Handler:
-    $.event.special.throttledresize = {
-        setup: function setup() {
-            $(this).on('resize', throttle_handler);
-        },
-        teardown: function teardown() {
-            $(this).off('resize', throttle_handler);
-        }
-    };
-
-    var throttle = 250,
-        throttle_handler = function throttle_handler() {
-        curr = Date.now();
-        diff = curr - lastCall;
-
-        if (diff >= throttle) {
-            lastCall = curr;
-            $(this).trigger('throttledresize');
-        } else {
-            if (heldCall) {
-                window.clearTimeout(heldCall);
-            }
-
-            // Promise a held call will still execute
-            heldCall = window.setTimeout(handler, throttle - diff);
-        }
+    setTimeout(function () {
+      if (!called) {
+        Util.triggerTransitionEnd(_this);
+      }
+    }, duration);
+
+    return this;
+  }
+
+  function setTransitionEndSupport() {
+    $.fn.emulateTransitionEnd = transitionEndEmulator;
+    $.event.special[Util.TRANSITION_END] = getSpecialTransitionEndEvent();
+  }
+
+  /**
+   * --------------------------------------------------------------------------
+   * Public Util Api
+   * --------------------------------------------------------------------------
+   */
+
+  var Util = {
+
+    TRANSITION_END: 'bsTransitionEnd',
+
+    getUID: function getUID(prefix) {
+      do {
+        // eslint-disable-next-line no-bitwise
+        prefix += ~~(Math.random() * MAX_UID); // "~~" acts like a faster Math.floor() here
+      } while (document.getElementById(prefix));
+      return prefix;
     },
-        lastCall = 0,
-        heldCall,
-        curr,
-        diff;
+    getSelectorFromElement: function getSelectorFromElement(element) {
+      var selector = element.getAttribute('data-target');
+      if (!selector || selector === '#') {
+        selector = element.getAttribute('href') || '';
+      }
 
-    // Trigger a custom event:
+      try {
+        var $selector = $(document).find(selector);
+        return $selector.length > 0 ? selector : null;
+      } catch (err) {
+        return null;
+      }
+    },
+    getTransitionDurationFromElement: function getTransitionDurationFromElement(element) {
+      if (!element) {
+        return 0;
+      }
 
-    function triggerCustomEvent(obj, eventType, event, touchData) {
-        var originalType = event.type;
-        event.type = eventType;
+      // Get transition-duration of the element
+      var transitionDuration = $(element).css('transition-duration');
+      var floatTransitionDuration = parseFloat(transitionDuration);
 
-        $.event.dispatch.call(obj, event, touchData);
-        event.type = originalType;
+      // Return 0 if element or transition duration is not found
+      if (!floatTransitionDuration) {
+        return 0;
+      }
+
+      // If multiple durations are defined, take the first
+      transitionDuration = transitionDuration.split(',')[0];
+
+      return parseFloat(transitionDuration) * MILLISECONDS_MULTIPLIER;
+    },
+    reflow: function reflow(element) {
+      return element.offsetHeight;
+    },
+    triggerTransitionEnd: function triggerTransitionEnd(element) {
+      $(element).trigger(TRANSITION_END);
+    },
+
+
+    // TODO: Remove in v5
+    supportsTransitionEnd: function supportsTransitionEnd() {
+      return Boolean(TRANSITION_END);
+    },
+    isElement: function isElement(obj) {
+      return (obj[0] || obj).nodeType;
+    },
+    typeCheckConfig: function typeCheckConfig(componentName, config, configTypes) {
+      for (var property in configTypes) {
+        if (Object.prototype.hasOwnProperty.call(configTypes, property)) {
+          var expectedTypes = configTypes[property];
+          var value = config[property];
+          var valueType = value && Util.isElement(value) ? 'element' : toType(value);
+
+          if (!new RegExp(expectedTypes).test(valueType)) {
+            throw new Error(componentName.toUpperCase() + ': ' + ('Option "' + property + '" provided type "' + valueType + '" ') + ('but expected type "' + expectedTypes + '".'));
+          }
+        }
+      }
+    }
+  };
+
+  setTransitionEndSupport();
+
+  return Util;
+}(__WEBPACK_IMPORTED_MODULE_0_jquery___default.a);
+
+/* harmony default export */ __webpack_exports__["default"] = (Util);
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util__ = __webpack_require__(1);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+
+/**
+ * --------------------------------------------------------------------------
+ * Bootstrap (v4.1.1): modal.js
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * --------------------------------------------------------------------------
+ */
+
+var Modal = function ($) {
+  /**
+   * ------------------------------------------------------------------------
+   * Constants
+   * ------------------------------------------------------------------------
+   */
+
+  var NAME = 'modal';
+  var VERSION = '4.1.1';
+  var DATA_KEY = 'bs.modal';
+  var EVENT_KEY = '.' + DATA_KEY;
+  var DATA_API_KEY = '.data-api';
+  var JQUERY_NO_CONFLICT = $.fn[NAME];
+  var ESCAPE_KEYCODE = 27; // KeyboardEvent.which value for Escape (Esc) key
+
+  var Default = {
+    backdrop: true,
+    keyboard: true,
+    focus: true,
+    show: true
+  };
+
+  var DefaultType = {
+    backdrop: '(boolean|string)',
+    keyboard: 'boolean',
+    focus: 'boolean',
+    show: 'boolean'
+  };
+
+  var Event = {
+    HIDE: 'hide' + EVENT_KEY,
+    HIDDEN: 'hidden' + EVENT_KEY,
+    SHOW: 'show' + EVENT_KEY,
+    SHOWN: 'shown' + EVENT_KEY,
+    FOCUSIN: 'focusin' + EVENT_KEY,
+    RESIZE: 'resize' + EVENT_KEY,
+    CLICK_DISMISS: 'click.dismiss' + EVENT_KEY,
+    KEYDOWN_DISMISS: 'keydown.dismiss' + EVENT_KEY,
+    MOUSEUP_DISMISS: 'mouseup.dismiss' + EVENT_KEY,
+    MOUSEDOWN_DISMISS: 'mousedown.dismiss' + EVENT_KEY,
+    CLICK_DATA_API: 'click' + EVENT_KEY + DATA_API_KEY
+  };
+
+  var ClassName = {
+    SCROLLBAR_MEASURER: 'modal-scrollbar-measure',
+    BACKDROP: 'modal-backdrop',
+    OPEN: 'modal-open',
+    FADE: 'fade',
+    SHOW: 'show'
+  };
+
+  var Selector = {
+    DIALOG: '.modal-dialog',
+    DATA_TOGGLE: '[data-toggle="modal"]',
+    DATA_DISMISS: '[data-dismiss="modal"]',
+    FIXED_CONTENT: '.fixed-top, .fixed-bottom, .is-fixed, .sticky-top',
+    STICKY_CONTENT: '.sticky-top',
+    NAVBAR_TOGGLER: '.navbar-toggler'
+
+    /**
+     * ------------------------------------------------------------------------
+     * Class Definition
+     * ------------------------------------------------------------------------
+     */
+
+  };
+  var Modal = function () {
+    function Modal(element, config) {
+      _classCallCheck(this, Modal);
+
+      this._config = this._getConfig(config);
+      this._element = element;
+      this._dialog = $(element).find(Selector.DIALOG)[0];
+      this._backdrop = null;
+      this._isShown = false;
+      this._isBodyOverflowing = false;
+      this._ignoreBackdropClick = false;
+      this._scrollbarWidth = 0;
     }
 
-    // Correctly on anything we've overloaded:
-    $.each({
-        scrollend: 'scrollstart',
-        swipeup: 'swipe',
-        swiperight: 'swipe',
-        swipedown: 'swipe',
-        swipeleft: 'swipe',
-        swipeend: 'swipe',
-        tap2: 'tap'
-    }, function (e, srcE) {
-        var emptyFunc = function emptyFunc() {};
+    // Getters
 
-        $.event.special[e] = {
-            setup: function setup() {
-                $(this).on(srcE, emptyFunc);
-            },
-            teardown: function teardown() {
-                $(this).off(srcE, emptyFunc);
+    _createClass(Modal, [{
+      key: 'toggle',
+
+
+      // Public
+
+      value: function toggle(relatedTarget) {
+        return this._isShown ? this.hide() : this.show(relatedTarget);
+      }
+    }, {
+      key: 'show',
+      value: function show(relatedTarget) {
+        var _this = this;
+
+        if (this._isTransitioning || this._isShown) {
+          return;
+        }
+
+        if ($(this._element).hasClass(ClassName.FADE)) {
+          this._isTransitioning = true;
+        }
+
+        var showEvent = $.Event(Event.SHOW, {
+          relatedTarget: relatedTarget
+        });
+
+        $(this._element).trigger(showEvent);
+
+        if (this._isShown || showEvent.isDefaultPrevented()) {
+          return;
+        }
+
+        this._isShown = true;
+
+        this._checkScrollbar();
+        this._setScrollbar();
+
+        this._adjustDialog();
+
+        $(document.body).addClass(ClassName.OPEN);
+
+        this._setEscapeEvent();
+        this._setResizeEvent();
+
+        $(this._element).on(Event.CLICK_DISMISS, Selector.DATA_DISMISS, function (event) {
+          return _this.hide(event);
+        });
+
+        $(this._dialog).on(Event.MOUSEDOWN_DISMISS, function () {
+          $(_this._element).one(Event.MOUSEUP_DISMISS, function (event) {
+            if ($(event.target).is(_this._element)) {
+              _this._ignoreBackdropClick = true;
             }
+          });
+        });
+
+        this._showBackdrop(function () {
+          return _this._showElement(relatedTarget);
+        });
+      }
+    }, {
+      key: 'hide',
+      value: function hide(event) {
+        var _this2 = this;
+
+        if (event) {
+          event.preventDefault();
+        }
+
+        if (this._isTransitioning || !this._isShown) {
+          return;
+        }
+
+        var hideEvent = $.Event(Event.HIDE);
+
+        $(this._element).trigger(hideEvent);
+
+        if (!this._isShown || hideEvent.isDefaultPrevented()) {
+          return;
+        }
+
+        this._isShown = false;
+        var transition = $(this._element).hasClass(ClassName.FADE);
+
+        if (transition) {
+          this._isTransitioning = true;
+        }
+
+        this._setEscapeEvent();
+        this._setResizeEvent();
+
+        $(document).off(Event.FOCUSIN);
+
+        $(this._element).removeClass(ClassName.SHOW);
+
+        $(this._element).off(Event.CLICK_DISMISS);
+        $(this._dialog).off(Event.MOUSEDOWN_DISMISS);
+
+        if (transition) {
+          var transitionDuration = __WEBPACK_IMPORTED_MODULE_1__util__["default"].getTransitionDurationFromElement(this._element);
+
+          $(this._element).one(__WEBPACK_IMPORTED_MODULE_1__util__["default"].TRANSITION_END, function (event) {
+            return _this2._hideModal(event);
+          }).emulateTransitionEnd(transitionDuration);
+        } else {
+          this._hideModal();
+        }
+      }
+    }, {
+      key: 'dispose',
+      value: function dispose() {
+        $.removeData(this._element, DATA_KEY);
+
+        $(window, document, this._element, this._backdrop).off(EVENT_KEY);
+
+        this._config = null;
+        this._element = null;
+        this._dialog = null;
+        this._backdrop = null;
+        this._isShown = null;
+        this._isBodyOverflowing = null;
+        this._ignoreBackdropClick = null;
+        this._scrollbarWidth = null;
+      }
+    }, {
+      key: 'handleUpdate',
+      value: function handleUpdate() {
+        this._adjustDialog();
+      }
+
+      // Private
+
+    }, {
+      key: '_getConfig',
+      value: function _getConfig(config) {
+        config = _extends({}, Default, config);
+        __WEBPACK_IMPORTED_MODULE_1__util__["default"].typeCheckConfig(NAME, config, DefaultType);
+        return config;
+      }
+    }, {
+      key: '_showElement',
+      value: function _showElement(relatedTarget) {
+        var _this3 = this;
+
+        var transition = $(this._element).hasClass(ClassName.FADE);
+
+        if (!this._element.parentNode || this._element.parentNode.nodeType !== Node.ELEMENT_NODE) {
+          // Don't move modal's DOM position
+          document.body.appendChild(this._element);
+        }
+
+        this._element.style.display = 'block';
+        this._element.removeAttribute('aria-hidden');
+        this._element.scrollTop = 0;
+
+        if (transition) {
+          __WEBPACK_IMPORTED_MODULE_1__util__["default"].reflow(this._element);
+        }
+
+        $(this._element).addClass(ClassName.SHOW);
+
+        if (this._config.focus) {
+          this._enforceFocus();
+        }
+
+        var shownEvent = $.Event(Event.SHOWN, {
+          relatedTarget: relatedTarget
+        });
+
+        var transitionComplete = function transitionComplete() {
+          if (_this3._config.focus) {
+            _this3._element.focus();
+          }
+          _this3._isTransitioning = false;
+          $(_this3._element).trigger(shownEvent);
         };
+
+        if (transition) {
+          var transitionDuration = __WEBPACK_IMPORTED_MODULE_1__util__["default"].getTransitionDurationFromElement(this._element);
+
+          $(this._dialog).one(__WEBPACK_IMPORTED_MODULE_1__util__["default"].TRANSITION_END, transitionComplete).emulateTransitionEnd(transitionDuration);
+        } else {
+          transitionComplete();
+        }
+      }
+    }, {
+      key: '_enforceFocus',
+      value: function _enforceFocus() {
+        var _this4 = this;
+
+        $(document).off(Event.FOCUSIN) // Guard against infinite focus loop
+        .on(Event.FOCUSIN, function (event) {
+          if (document !== event.target && _this4._element !== event.target && $(_this4._element).has(event.target).length === 0) {
+            _this4._element.focus();
+          }
+        });
+      }
+    }, {
+      key: '_setEscapeEvent',
+      value: function _setEscapeEvent() {
+        var _this5 = this;
+
+        if (this._isShown && this._config.keyboard) {
+          $(this._element).on(Event.KEYDOWN_DISMISS, function (event) {
+            if (event.which === ESCAPE_KEYCODE) {
+              event.preventDefault();
+              _this5.hide();
+            }
+          });
+        } else if (!this._isShown) {
+          $(this._element).off(Event.KEYDOWN_DISMISS);
+        }
+      }
+    }, {
+      key: '_setResizeEvent',
+      value: function _setResizeEvent() {
+        var _this6 = this;
+
+        if (this._isShown) {
+          $(window).on(Event.RESIZE, function (event) {
+            return _this6.handleUpdate(event);
+          });
+        } else {
+          $(window).off(Event.RESIZE);
+        }
+      }
+    }, {
+      key: '_hideModal',
+      value: function _hideModal() {
+        var _this7 = this;
+
+        this._element.style.display = 'none';
+        this._element.setAttribute('aria-hidden', true);
+        this._isTransitioning = false;
+        this._showBackdrop(function () {
+          $(document.body).removeClass(ClassName.OPEN);
+          _this7._resetAdjustments();
+          _this7._resetScrollbar();
+          $(_this7._element).trigger(Event.HIDDEN);
+        });
+      }
+    }, {
+      key: '_removeBackdrop',
+      value: function _removeBackdrop() {
+        if (this._backdrop) {
+          $(this._backdrop).remove();
+          this._backdrop = null;
+        }
+      }
+    }, {
+      key: '_showBackdrop',
+      value: function _showBackdrop(callback) {
+        var _this8 = this;
+
+        var animate = $(this._element).hasClass(ClassName.FADE) ? ClassName.FADE : '';
+
+        if (this._isShown && this._config.backdrop) {
+          this._backdrop = document.createElement('div');
+          this._backdrop.className = ClassName.BACKDROP;
+
+          if (animate) {
+            $(this._backdrop).addClass(animate);
+          }
+
+          $(this._backdrop).appendTo(document.body);
+
+          $(this._element).on(Event.CLICK_DISMISS, function (event) {
+            if (_this8._ignoreBackdropClick) {
+              _this8._ignoreBackdropClick = false;
+              return;
+            }
+            if (event.target !== event.currentTarget) {
+              return;
+            }
+            if (_this8._config.backdrop === 'static') {
+              _this8._element.focus();
+            } else {
+              _this8.hide();
+            }
+          });
+
+          if (animate) {
+            __WEBPACK_IMPORTED_MODULE_1__util__["default"].reflow(this._backdrop);
+          }
+
+          $(this._backdrop).addClass(ClassName.SHOW);
+
+          if (!callback) {
+            return;
+          }
+
+          if (!animate) {
+            callback();
+            return;
+          }
+
+          var backdropTransitionDuration = __WEBPACK_IMPORTED_MODULE_1__util__["default"].getTransitionDurationFromElement(this._backdrop);
+
+          $(this._backdrop).one(__WEBPACK_IMPORTED_MODULE_1__util__["default"].TRANSITION_END, callback).emulateTransitionEnd(backdropTransitionDuration);
+        } else if (!this._isShown && this._backdrop) {
+          $(this._backdrop).removeClass(ClassName.SHOW);
+
+          var callbackRemove = function callbackRemove() {
+            _this8._removeBackdrop();
+            if (callback) {
+              callback();
+            }
+          };
+
+          if ($(this._element).hasClass(ClassName.FADE)) {
+            var _backdropTransitionDuration = __WEBPACK_IMPORTED_MODULE_1__util__["default"].getTransitionDurationFromElement(this._backdrop);
+
+            $(this._backdrop).one(__WEBPACK_IMPORTED_MODULE_1__util__["default"].TRANSITION_END, callbackRemove).emulateTransitionEnd(_backdropTransitionDuration);
+          } else {
+            callbackRemove();
+          }
+        } else if (callback) {
+          callback();
+        }
+      }
+
+      // ----------------------------------------------------------------------
+      // the following methods are used to handle overflowing modals
+      // todo (fat): these should probably be refactored out of modal.js
+      // ----------------------------------------------------------------------
+
+    }, {
+      key: '_adjustDialog',
+      value: function _adjustDialog() {
+        var isModalOverflowing = this._element.scrollHeight > document.documentElement.clientHeight;
+
+        if (!this._isBodyOverflowing && isModalOverflowing) {
+          this._element.style.paddingLeft = this._scrollbarWidth + 'px';
+        }
+
+        if (this._isBodyOverflowing && !isModalOverflowing) {
+          this._element.style.paddingRight = this._scrollbarWidth + 'px';
+        }
+      }
+    }, {
+      key: '_resetAdjustments',
+      value: function _resetAdjustments() {
+        this._element.style.paddingLeft = '';
+        this._element.style.paddingRight = '';
+      }
+    }, {
+      key: '_checkScrollbar',
+      value: function _checkScrollbar() {
+        var rect = document.body.getBoundingClientRect();
+        this._isBodyOverflowing = rect.left + rect.right < window.innerWidth;
+        this._scrollbarWidth = this._getScrollbarWidth();
+      }
+    }, {
+      key: '_setScrollbar',
+      value: function _setScrollbar() {
+        var _this9 = this;
+
+        if (this._isBodyOverflowing) {
+          // Note: DOMNode.style.paddingRight returns the actual value or '' if not set
+          //   while $(DOMNode).css('padding-right') returns the calculated value or 0 if not set
+
+          // Adjust fixed content padding
+          $(Selector.FIXED_CONTENT).each(function (index, element) {
+            var actualPadding = $(element)[0].style.paddingRight;
+            var calculatedPadding = $(element).css('padding-right');
+            $(element).data('padding-right', actualPadding).css('padding-right', parseFloat(calculatedPadding) + _this9._scrollbarWidth + 'px');
+          });
+
+          // Adjust sticky content margin
+          $(Selector.STICKY_CONTENT).each(function (index, element) {
+            var actualMargin = $(element)[0].style.marginRight;
+            var calculatedMargin = $(element).css('margin-right');
+            $(element).data('margin-right', actualMargin).css('margin-right', parseFloat(calculatedMargin) - _this9._scrollbarWidth + 'px');
+          });
+
+          // Adjust navbar-toggler margin
+          $(Selector.NAVBAR_TOGGLER).each(function (index, element) {
+            var actualMargin = $(element)[0].style.marginRight;
+            var calculatedMargin = $(element).css('margin-right');
+            $(element).data('margin-right', actualMargin).css('margin-right', parseFloat(calculatedMargin) + _this9._scrollbarWidth + 'px');
+          });
+
+          // Adjust body padding
+          var actualPadding = document.body.style.paddingRight;
+          var calculatedPadding = $(document.body).css('padding-right');
+          $(document.body).data('padding-right', actualPadding).css('padding-right', parseFloat(calculatedPadding) + this._scrollbarWidth + 'px');
+        }
+      }
+    }, {
+      key: '_resetScrollbar',
+      value: function _resetScrollbar() {
+        // Restore fixed content padding
+        $(Selector.FIXED_CONTENT).each(function (index, element) {
+          var padding = $(element).data('padding-right');
+          if (typeof padding !== 'undefined') {
+            $(element).css('padding-right', padding).removeData('padding-right');
+          }
+        });
+
+        // Restore sticky content and navbar-toggler margin
+        $(Selector.STICKY_CONTENT + ', ' + Selector.NAVBAR_TOGGLER).each(function (index, element) {
+          var margin = $(element).data('margin-right');
+          if (typeof margin !== 'undefined') {
+            $(element).css('margin-right', margin).removeData('margin-right');
+          }
+        });
+
+        // Restore body padding
+        var padding = $(document.body).data('padding-right');
+        if (typeof padding !== 'undefined') {
+          $(document.body).css('padding-right', padding).removeData('padding-right');
+        }
+      }
+    }, {
+      key: '_getScrollbarWidth',
+      value: function _getScrollbarWidth() {
+        // thx d.walsh
+        var scrollDiv = document.createElement('div');
+        scrollDiv.className = ClassName.SCROLLBAR_MEASURER;
+        document.body.appendChild(scrollDiv);
+        var scrollbarWidth = scrollDiv.getBoundingClientRect().width - scrollDiv.clientWidth;
+        document.body.removeChild(scrollDiv);
+        return scrollbarWidth;
+      }
+
+      // Static
+
+    }], [{
+      key: '_jQueryInterface',
+      value: function _jQueryInterface(config, relatedTarget) {
+        return this.each(function () {
+          var data = $(this).data(DATA_KEY);
+          var _config = _extends({}, Default, $(this).data(), (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config ? config : {});
+
+          if (!data) {
+            data = new Modal(this, _config);
+            $(this).data(DATA_KEY, data);
+          }
+
+          if (typeof config === 'string') {
+            if (typeof data[config] === 'undefined') {
+              throw new TypeError('No method named "' + config + '"');
+            }
+            data[config](relatedTarget);
+          } else if (_config.show) {
+            data.show(relatedTarget);
+          }
+        });
+      }
+    }, {
+      key: 'VERSION',
+      get: function get() {
+        return VERSION;
+      }
+    }, {
+      key: 'Default',
+      get: function get() {
+        return Default;
+      }
+    }]);
+
+    return Modal;
+  }();
+
+  /**
+   * ------------------------------------------------------------------------
+   * Data Api implementation
+   * ------------------------------------------------------------------------
+   */
+
+  $(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (event) {
+    var _this10 = this;
+
+    var target = void 0;
+    var selector = __WEBPACK_IMPORTED_MODULE_1__util__["default"].getSelectorFromElement(this);
+
+    if (selector) {
+      target = $(selector)[0];
+    }
+
+    var config = $(target).data(DATA_KEY) ? 'toggle' : _extends({}, $(target).data(), $(this).data());
+
+    if (this.tagName === 'A' || this.tagName === 'AREA') {
+      event.preventDefault();
+    }
+
+    var $target = $(target).one(Event.SHOW, function (showEvent) {
+      if (showEvent.isDefaultPrevented()) {
+        // Only register focus restorer if modal will actually get shown
+        return;
+      }
+
+      $target.one(Event.HIDDEN, function () {
+        if ($(_this10).is(':visible')) {
+          _this10.focus();
+        }
+      });
     });
-})(jQuery);
+
+    Modal._jQueryInterface.call($(target), config, this);
+  });
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+
+  $.fn[NAME] = Modal._jQueryInterface;
+  $.fn[NAME].Constructor = Modal;
+  $.fn[NAME].noConflict = function () {
+    $.fn[NAME] = JQUERY_NO_CONFLICT;
+    return Modal._jQueryInterface;
+  };
+
+  return Modal;
+}(__WEBPACK_IMPORTED_MODULE_0_jquery___default.a);
+
+/* harmony default export */ __webpack_exports__["default"] = (Modal);
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+// MODAL WINDOW
+$(function () {
+    $('.ajax-modal').on('click', function (event) {
+
+        event.preventDefault();
+
+        var url = $(this).data('url');
+        var data = $(this).data('name');
+        var size = $(this).data('modal-size');
+
+        if (size) {
+            $('#modal-container').find('.modal-dialog').addClass(size);
+        }
+
+        $('#modal-container').find('.modal-dialog').append('<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title">' + data + '</h5>' + '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + '</button>' + '</div>' + '<div class="modal-body">' + '</div>' + '</div>');
+
+        $.ajax({
+            url: url,
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            type: 'POST',
+            //dataType: 'JSON',
+            success: function success(data) {
+                $('#modal-container').find('.modal-body').append(data.html);
+            },
+            complete: function complete() {
+                $('#modal-container').modal('show');
+            }
+        });
+
+        // CLEAR MODAL CONTENT
+        $('#modal-container').on('hidden.bs.modal', function (e) {
+            $(this).find('.modal-dialog').text('');
+        });
+    });
+});
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(5);
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+window.$ = window.jQuery = __webpack_require__(0);
+//window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
+//require('./bootstrap');
+//require('./jq_swipe-detect');
+//require('./components/util.js');
+__webpack_require__(2);
+__webpack_require__(3);
+
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

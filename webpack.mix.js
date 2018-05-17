@@ -13,6 +13,9 @@ let mix = require('laravel-mix');
 // var bootstrap_sass = './node_modules/bootstrap-sass/';
 mix.js('resources/assets/js/app.js', 'public/js')
     //.js('resources/assets/js/main_menu.js', 'public/js/components')
+    .js('resources/assets/js/components/util.js', 'public/js/components')
+    .js('resources/assets/js/components/modal.js', 'public/js/components')
+    .js('resources/assets/js/components/modal-ajax.js', 'public/js/components')
    .sass('resources/assets/sass/app.scss', 'public/css')
   // .sass('resources/assets/sass/components/image-select-area.scss', 'public/css/components');
 
