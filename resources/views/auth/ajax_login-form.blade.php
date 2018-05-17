@@ -69,13 +69,12 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.auth === true) {
-                    modal_window.find(button).html('Успешно!');
-                    setTimeout(function () {
-                        modal_window.modal('hide');
-                    }, 2000);
-                    setTimeout(function () {
+                    modal_window.find(button).html('Войти');
+                    modal_window.modal('hide');
+                    modal_window.on('hidden.bs.modal', function () {
                         window.location.reload();
-                    }, 2100);
+                    });
+
                 } else {
                     modal_window.find(button).html('Дульки пердульки');
                 }

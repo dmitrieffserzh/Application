@@ -10,10 +10,10 @@ $(function () {
         var modal_content   = '.modal-body';
 
         // DATA
-        var data_url     = $(this).data('url');
-        var data_name    = $(this).data('name');
-        var data_content = $(this).data('content');
-        var modal_size   = $(this).data('modal-size');
+        var data_url        = $(this).data('url');
+        var data_name       = $(this).data('name');
+        var data_content    = $(this).data('content');
+        var modal_size      = $(this).data('modal-size');
 
         if(modal_size) modal_window.find(modal_container).addClass(modal_size);
 
@@ -47,7 +47,7 @@ $(function () {
 
         // CLEAR MODAL CONTENT
         modal_window.on('hidden.bs.modal', function () {
-            $(this).find(modal_container).text('');
+            $(this).find(modal_container).children().remove();
             if(modal_size) modal_window.find(modal_container).removeClass(modal_size);
         });
     });
