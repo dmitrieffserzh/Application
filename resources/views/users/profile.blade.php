@@ -70,8 +70,9 @@
                 {{--</div>--}}
             </div>
             <div class="p3">
-                <a href="#" class="ajax-modal btn btn-light btn-sm m-1" data-name="Подписаться на пользователя" data-url="#" data-content="Тест модального окна и текста в нем!! ссылочка">Модалка ссылка</a>
-                <button class="ajax-modal btn btn-primary btn-sm m-1" data-modal-size="modal-lg" data-name="Удалить запись" data-url="#" data-content="Тест модального окна и текста в нем!!<a href='#'>ссыль</a>">Модалка кнопка</button>
+                <button class="ajax-modal btn btn-outline-info btn-sm m-1" data-modal-size="modal-sm" data-name="Удалить запись" data-url="#" data-content="Тест модального окна и текста в нем!!<a href='#'>ссыль</a>">Маленькое окно</button>
+                <a href="#" class="ajax-modal btn btn-outline-primary btn-sm m-1" data-name="Подписаться на пользователя" data-url="#" data-content="Тест модального окна и текста в нем!! ссылочка">Среднее окно</a>
+                <button class="ajax-modal btn btn-outline-danger btn-sm m-1" data-modal-size="modal-lg" data-name="Удалить запись" data-url="#" data-content="Тест модального окна и текста в нем!!<a href='#'>ссыль</a>">Большое окно</button>
             </div>
             <div class="profile-info mt-3 p-3">
                 <h2 class="h6 py-2 border-bottom border-gray">Информация</h2>
