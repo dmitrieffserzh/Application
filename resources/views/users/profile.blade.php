@@ -69,8 +69,10 @@
                 {{--</div>--}}
                 {{--</div>--}}
             </div>
-            <a href="#" class="ajax-modal" data-name="Подписаться на пользователя" data-url="#" data-content="Пиздец Васе!! f 'nj ссылочка">Модалка с</a>
-            <button class="ajax-modal btn btn-primary" data-name="Удалить запись" data-url="#" data-content="Пиздец Васе!!<a href='#'>ссыль</a>">Модалка б</button>
+            <div class="p3">
+                <a href="#" class="ajax-modal btn btn-light btn-sm m-1" data-name="Подписаться на пользователя" data-url="#" data-content="Тест модального окна и текста в нем!! ссылочка">Модалка ссылка</a>
+                <button class="ajax-modal btn btn-primary btn-sm m-1" data-modal-size="modal-lg" data-name="Удалить запись" data-url="#" data-content="Тест модального окна и текста в нем!!<a href='#'>ссыль</a>">Модалка кнопка</button>
+            </div>
             <div class="profile-info mt-3 p-3">
                 <h2 class="h6 py-2 border-bottom border-gray">Информация</h2>
 

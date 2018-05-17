@@ -11262,6 +11262,7 @@ $(function () {
                 // CLEAR MODAL CONTENT
                 modal_window.on('hidden.bs.modal', function () {
                         $(this).find(modal_container).text('');
+                        if (modal_size) modal_window.find(modal_container).removeClass(modal_size);
                 });
         });
 });
