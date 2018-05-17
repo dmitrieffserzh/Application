@@ -10,18 +10,17 @@ $(function () {
         var modal_content   = '.modal-body';
 
         // DATA
-        var url   = $(this).data('url');
-        var data  = $(this).data('name');
-        var size  = $(this).data('modal-size');
+        var data_url     = $(this).data('url');
+        var data_name    = $(this).data('name');
+        var data_content = $(this).data('content');
+        var modal_size   = $(this).data('modal-size');
 
-        if (size) {
-            modal_window.find(modal_container).addClass(size);
-        }
+        if(modal_size) modal_window.find(modal_container).addClass(modal_size);
 
         modal_window.find(modal_container).append(
              '<div class="modal-content">' +
              '<div class="modal-header">' +
-             '<h5 class="modal-title">' + data + '</h5>' +
+             '<h6 class="modal-title">' + data_name + '</h6>' +
              '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
              '<span aria-hidden="true">&times;</span>' +
              '</button>' +
@@ -31,7 +30,7 @@ $(function () {
              '</div>');
 
         $.ajax({
-            url: url,
+            url: data_url,
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type: 'POST',
             success: function (data) {
@@ -41,6 +40,10 @@ $(function () {
                 modal_window.modal('show');
             }
         });
+
+        if(data_content) {
+            modal_window.find(modal_content).append(data_content);
+        }
 
         // CLEAR MODAL CONTENT
         modal_window.on('hidden.bs.modal', function () {
