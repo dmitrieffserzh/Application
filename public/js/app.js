@@ -11228,32 +11228,37 @@ $(function () {
 
         event.preventDefault();
 
+        // MODAL
+        var modal_window = $('.modal');
+        var modal_container = $('.modal-dialog');
+        var modal_content = '.modal-body';
+
+        // DATA
         var url = $(this).data('url');
         var data = $(this).data('name');
         var size = $(this).data('modal-size');
 
         if (size) {
-            $('#modal-container').find('.modal-dialog').addClass(size);
+            modal_window.find(modal_container).addClass(size);
         }
 
-        $('#modal-container').find('.modal-dialog').append('<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title">' + data + '</h5>' + '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + '</button>' + '</div>' + '<div class="modal-body">' + '</div>' + '</div>');
+        modal_window.find(modal_container).append('<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title">' + data + '</h5>' + '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + '</button>' + '</div>' + '<div class="modal-body">' + '</div>' + '</div>');
 
         $.ajax({
             url: url,
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             type: 'POST',
-            //dataType: 'JSON',
             success: function success(data) {
-                $('#modal-container').find('.modal-body').append(data.html);
+                modal_window.find(modal_content).append(data.html);
             },
             complete: function complete() {
-                $('#modal-container').modal('show');
+                modal_window.modal('show');
             }
         });
 
         // CLEAR MODAL CONTENT
-        $('#modal-container').on('hidden.bs.modal', function (e) {
-            $(this).find('.modal-dialog').text('');
+        modal_window.on('hidden.bs.modal', function () {
+            $(this).find(modal_container).text('');
         });
     });
 });
@@ -11281,7 +11286,7 @@ window.$ = window.jQuery = __webpack_require__(0);
 //window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
 //require('./bootstrap');
 //require('./jq_swipe-detect');
-//require('./components/util.js');
+__webpack_require__(1);
 __webpack_require__(2);
 __webpack_require__(3);
 

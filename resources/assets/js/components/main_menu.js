@@ -3,7 +3,7 @@ $(function () {
     var menu_container = $('#menu-container');
     var button = $('.main-menu__button, .splash');
     var splash = $('.splash');
-    var body = $('body');
+    var body   = $('body');
 
     var open_menu = function () {
         splash.css({'display': 'block'});

@@ -37,7 +37,7 @@
 
     <div class="row">
         <div class="col text-center">
-            <button id="btn-submit" type="submit" class="btn btn-primary btn-block">
+            <button type="submit" class="btn-submit btn btn-primary btn-block">
                 Войти
             </button>
 
@@ -57,7 +57,10 @@
     $('#login-form').on('submit', function (event) {
         event.preventDefault();
 
-        $('#modal-container').find('#btn-submit').attr("disabled", true).html('Отправка...');
+        var modal_window  = $('.modal');
+        var button        = '.btn-submit';
+
+        modal_window.find(button).attr("disabled", true).html('Отправка запроса...');
         $.ajax({
             url: $(this).attr('action'),
             data: $('#login-form').serialize(),
@@ -66,20 +69,18 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.auth === true) {
-                    console.log(true);
-                    $('#modal-container').find('#btn-submit').html('Успешно!');
+                    modal_window.find(button).html('Успешно!');
                     setTimeout(function () {
-                        $('#modal-container').modal('hide');
+                        modal_window.modal('hide');
                     }, 2000);
                     setTimeout(function () {
                         window.location.reload();
                     }, 2100);
                 } else {
-                    console.log(false);
-                    $('#modal-container').find('#btn-submit').html('Дульки пердульки');
+                    modal_window.find(button).html('Дульки пердульки');
                 }
                 setTimeout(function () {
-                    $('#modal-container').modal('show');
+                    modal_window.modal('show');
                 }, 3000);
             }
         });
