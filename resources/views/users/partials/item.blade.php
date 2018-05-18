@@ -25,15 +25,16 @@
                 {{ getOnlineTime($user->profile->sex, $user->profile->offline_at->diffForHumans()) }}
             </span>
         @endif
-
-        @if(Auth::check() && Auth::id()!= $user->id)
-            <a href="#" class="follow btn btn-primary btn-sm float-right" data-id="{{ $user->id }}">
-                @if($user->followers()->find( Auth::id() ))
-                    Отписаться
-                @else
-                    Подписаться
-                @endif
-            </a>
-        @endif
+    </div>
+    <div class="align-self-center">
+    @if(Auth::check() && Auth::id()!= $user->id)
+        <a href="#" class="follow btn btn-primary btn-sm" data-id="{{ $user->id }}" style="min-width: 115px;text-transform:lowercase;">
+            @if($user->followers()->find( Auth::id() ))
+                Отписаться
+            @else
+                Подписаться
+            @endif
+        </a>
+    @endif
     </div>
 </div>

@@ -11,7 +11,7 @@
     {{--@include('posts.partials.form_list')--}}
     <main id="content" class="col-md-8">
         <div class="row">
-            <section class="section">
+            <section class="section col p-0">
                 @forelse ($posts as $post)
 
                     @include('posts.partials.item', ['post' => $post])

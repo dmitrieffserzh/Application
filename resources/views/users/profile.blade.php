@@ -55,6 +55,10 @@
                                 {{ getOnlineTime($user->profile->sex, $user->profile->offline_at->diffForHumans()) }}
                             </span>
                         @endif
+
+                        <span class="btn btn-outline-primary mt-3">{{$user->followers($user->id)->count() }}</span>
+
+
                     </div>
 
                 </div>
@@ -72,16 +76,20 @@
 
 
             </div>
-            <div class="p3">
-                <a href="#" class="follow btn btn-primary" data-id="{{ $user->id }}">
-                    Follow <span class="badge badge-pill badge-success">{{$user->followers($user->id)->count() }}</span>
 
-                </a>
-
-                @php($ggggg = $user->followings)
-
-
+            <div class="text-center mb-5" style="margin-top: -18px">
+                @if(Auth::check() && Auth::id()!= $user->id)
+                    <a href="#" class="follow btn btn-primary shadow-lg" data-id="{{ $user->id }}" style="text-transform:lowercase;width: 150px">
+                        @if($user->followers()->find( Auth::id() ))
+                            Отписаться
+                        @else
+                            Подписаться
+                        @endif
+                    </a>
+                @endif
             </div>
+
+
 
             <div class="p3">
                 <button class="ajax-modal btn btn-outline-info btn-sm m-1" data-modal-size="modal-sm" data-name="Удалить запись" data-url="#" data-content="Тест модального окна и текста в нем!!<a href='#'>ссыль</a>">Маленькое окно</button>
