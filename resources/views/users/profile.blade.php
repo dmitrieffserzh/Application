@@ -68,7 +68,21 @@
                 {{----}}
                 {{--</div>--}}
                 {{--</div>--}}
+
+
+
             </div>
+            <div class="p3">
+                <a href="#" class="follow btn btn-primary" data-id="{{ $user->id }}">
+                    Follow <span class="badge badge-pill badge-success">{{$user->followers($user->id)->count() }}</span>
+
+                </a>
+
+                @php($ggggg = $user->followings)
+
+
+            </div>
+
             <div class="p3">
                 <button class="ajax-modal btn btn-outline-info btn-sm m-1" data-modal-size="modal-sm" data-name="Удалить запись" data-url="#" data-content="Тест модального окна и текста в нем!!<a href='#'>ссыль</a>">Маленькое окно</button>
                 <a href="#" class="ajax-modal btn btn-outline-primary btn-sm m-1" data-name="Подписаться на пользователя" data-url="#" data-content="Тест модального окна и текста в нем!! ссылочка">Среднее окно</a>

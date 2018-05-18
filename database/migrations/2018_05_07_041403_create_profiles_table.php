@@ -18,13 +18,13 @@ class CreateProfilesTable extends Migration
             $table->integer('user_id');
             $table->string('name')->nullable();
             $table->string('surname')->nullable();
-            $table->intager('sex');
+            $table->integer('sex')->nullable();
             $table->string('city')->nullable();
             $table->string('phone')->nullable();
             $table->string('birthday')->nullable();
             $table->text('about_user')->nullable();
             $table->string('avatar')->default('/images/default/default_user.png');
-            $table->timestamp('offline')->nullable();
+            $table->timestamp('offline_at')->nullable();
             $table->timestamps();
         });
     }

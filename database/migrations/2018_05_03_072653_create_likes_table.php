@@ -18,8 +18,8 @@ class CreateLikesTable extends Migration
 	        $table->integer('user_id');
 	        $table->integer('content_id');
             $table->string('content_type');
-	        $table->softDeletes();
             $table->timestamps();
+	        $table->softDeletes();
         });
     }
 

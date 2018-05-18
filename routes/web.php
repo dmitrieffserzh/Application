@@ -35,3 +35,7 @@ Route::post('like', ['as' => 'like', 'uses' => 'LikeController@like']);
 
 // IMAGE UPLOADER
 Route::post('image_upload', 'ImageController@upload')->name('image.upload');
+
+
+// FOLLOWERS
+Route::post('follow_handler','FollowController@follow')->name('follow_handler');

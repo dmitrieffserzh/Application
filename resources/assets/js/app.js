@@ -14,6 +14,7 @@ window.$ = window.jQuery = require('jquery');
 require('./components/util.js');
 require('./components/modal.js');
 require('./components/modal-ajax');
+require('./components/follow');
 
 
 /**

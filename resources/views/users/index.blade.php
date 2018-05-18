@@ -10,7 +10,7 @@
         <section class="section">
 
             <h4 class="border-bottom border-gray pb-2 mb-0">Пользователи</h4>
-            <?php $count = count($users); ?>
+            @php ($count = count($users))
             @forelse ($users as $user)
 
                 @include('users.partials.item', ['post' => $user])

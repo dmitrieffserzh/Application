@@ -16,12 +16,6 @@
             <span class="d-block text-secondary small lh-125">{{$user->profile->name}} {{$user->profile->surname}}</span>
         @endif
 
-        {{--@if($user->profile->city)--}}
-            {{--<span class="d-block text-muted small lh-125">--}}
-                {{--{{ $user->profile->city }}--}}
-            {{--</span>--}}
-        {{--@endif--}}
-
         @if($user->isOnline())
             <span class="d-block text-muted small lh-125 font-weight-light font-monospace">
                 онлайн
@@ -30,6 +24,12 @@
             <span class="d-block text-muted small lh-125 font-weight-light font-monospace">
                 {{ getOnlineTime($user->profile->sex, $user->profile->offline_at->diffForHumans()) }}
             </span>
+        @endif
+
+        @if(Auth::check() && Auth::id()!= $user->id)
+            <a href="#" class="follow" data-id="{{ $user->id }}">
+                Follow
+            </a>
         @endif
     </div>
 </div>
