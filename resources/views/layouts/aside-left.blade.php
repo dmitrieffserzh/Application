@@ -127,7 +127,7 @@
 
 {{-- Modal --}}
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document"></div>
+    <div class="modal-dialog modal-dialog-centered" role="document"></div>
 </div>
 
 </body>
