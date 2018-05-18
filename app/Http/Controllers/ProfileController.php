@@ -30,9 +30,7 @@ class ProfileController extends Controller {
 
     // USER PROFILE
     public function profile($id) {
-
         $user = User::find($id);
-
         return view('users.profile', compact('user'));
     }
 
