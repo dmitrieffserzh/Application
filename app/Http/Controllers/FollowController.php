@@ -19,15 +19,12 @@ class FollowController extends Controller {
 
 			$result = $request->all();
 			$user   = User::find( $result['id'] );
-			if ( ! $user ) {
-				return redirect()->back()->with( 'error', 'User does not exist.' );
-			}
-
-			if ( $user->id == Auth::id() ) {
+			if ( !$user || $user->id == Auth::id() ) {
 				return Response()->json( [
-					'error' => 'Подписаться на себя нельзя!!!'
+					'error' => 'Ошибка!'
 				] );
 			}
+
 
 			$follow_true = $user->followers()->find( Auth::id() );
 
@@ -36,7 +33,7 @@ class FollowController extends Controller {
 				$user->followers()->detach( Auth::id() );
 
 				return Response()->json( [
-					'success' => 'false',
+					'success' => false,
 					'message' => 'Подписка отменена!'
 				] );
 			}
@@ -45,7 +42,7 @@ class FollowController extends Controller {
 
 			//return redirect()->back()->with('success', 'Successfully followed the user.');
 			return Response()->json( [
-				'success' => 'true',
+				'success' => true,
 				'message' => 'Подписка оформлена!'
 			] );
 

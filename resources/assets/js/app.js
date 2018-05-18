@@ -13,8 +13,8 @@ window.$ = window.jQuery = require('jquery');
 //require('./jq_swipe-detect');
 require('./components/util.js');
 require('./components/modal.js');
-require('./components/modal-ajax');
-require('./components/follow');
+require('./components/modal-ajax.js');
+require('./components/follow.js');
 
 
 /**

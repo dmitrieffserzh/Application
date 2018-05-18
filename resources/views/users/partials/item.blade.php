@@ -27,8 +27,12 @@
         @endif
 
         @if(Auth::check() && Auth::id()!= $user->id)
-            <a href="#" class="follow" data-id="{{ $user->id }}">
-                Follow
+            <a href="#" class="follow btn btn-primary btn-sm float-right" data-id="{{ $user->id }}">
+                @if($user->followers()->find( Auth::id() ))
+                    Отписаться
+                @else
+                    Подписаться
+                @endif
             </a>
         @endif
     </div>

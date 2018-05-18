@@ -11272,7 +11272,7 @@ $(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(5);
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(7);
 
 
 /***/ }),
@@ -11293,7 +11293,7 @@ window.$ = window.jQuery = __webpack_require__(0);
 __webpack_require__(1);
 __webpack_require__(2);
 __webpack_require__(3);
-__webpack_require__(16);
+__webpack_require__(6);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -11305,44 +11305,34 @@ __webpack_require__(16);
 /* 6 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */
-/***/ (function(module, exports) {
-
-// LIKE SYSTEM
+// FOLLOW SYSTEM
 $(document).on('click', '.follow', function () {
-    var that_main = $(this).parent();
+    var elem = $(this).parent();
     var data = $(this).data();
     $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: data,
         type: 'POST',
         url: '/follow_handler',
-        success: function success(result) {
-            //that_main.find('.component-like__count').text(result.like_count);
-            if (result.liked === true) {
-                console.log(result);
-                // that_main.find('.follow').removeClass('like--noliked').addClass('like--liked');
+        success: function success(data) {
+            if (data.success === true) {
+                elem.find('.follow').text('Отписаться');
+                console.log(data);
             } else {
-                console.log(result);
-                //that_main.find('.follow').removeClass('like--liked').addClass('like--noliked');
+                elem.find('.follow').text('Подписаться');
+                console.log(data);
             }
         }
     });
 
     event.preventDefault();
 });
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

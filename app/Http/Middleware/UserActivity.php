@@ -16,7 +16,7 @@ class UserActivity {
 	        Cache::put( 'user-is-online-' . Auth::id(), true, $expiresAt );
 
 	        $timestamp = Carbon::now();
-	        Profile::all(Auth::id())->first()->update([ 'offline_at' => $timestamp]);
+	        Profile::find(Auth::id())->update([ 'offline_at' => $timestamp]);
         }
         return $next($request);
     }
