@@ -16,6 +16,11 @@
                    title="{{ $post->owner->nickname }}">
                     {{ $post->owner->nickname }}
                 </a>
+                <span class="float-right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b6bcc7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+
+                </span>
+
                 <span class="d-block text-muted small font-weight-light font-monospace">
                         {{ $post->created_at->diffForHumans() }}
                     </span>
@@ -31,8 +36,15 @@
         {!! $post->content !!}
     </div>
     <footer class="article-footer pt-3 px-3 border-top border-gray lh-100">
-        {{$post->count_view}}
-        <div class="component-like d-block text-right">
+                <span class="fload-left component-like__count mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    4</span>
+        <span class="fload-left component-like__count">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+
+            {{$post->count_view}}</span>
+        <div class="component-like d-inline-block float-right">
+
             <div class="component-like__count d-inline-block">{{ $post->like()->count() }}</div>
             @if (Auth::guest())
                 <a href="{{ route('login') }}" class="ajax-modal component-like__button d-inline-block like--noliked" data-name="Войти" data-url="{{ route('login') }}" data-modal-size="modal-sm">
