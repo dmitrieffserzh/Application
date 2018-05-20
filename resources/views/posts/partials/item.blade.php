@@ -21,12 +21,17 @@
                     </span>
             </div>
         </div>
-        <h5 class="pt-3 px-3">{{ $post->title }}</h5>
+        <h5 class="pt-3 px-3">
+            <a href="{{ route('post.view', $post->id) }}">
+                {{ $post->title }}
+            </a>
+        </h5>
     </header>
     <div class="article-content">
         {!! $post->content !!}
     </div>
     <footer class="article-footer pt-3 px-3 border-top border-gray lh-100">
+        {{$post->count_view}}
         <div class="component-like d-block text-right">
             <div class="component-like__count d-inline-block">{{ $post->like()->count() }}</div>
             @if (Auth::guest())

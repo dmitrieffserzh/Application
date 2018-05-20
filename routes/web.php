@@ -25,10 +25,19 @@ Route::get('user/id{id}/edit', 'ProfileController@edit')->name('users.profile.ed
 Route::post('user/id{id}/update', 'ProfileController@update')->name('users.profile.update');
 
 // POSTS
-Route::get('posts', 'PostController@index')->name('posts.index');
-Route::post('posts', 'PostController@index')->name('posts.index');
-Route::post('posts/create_in_list', 'PostController@createInList')->name('posts.create_in_list');
-Route::post('upload','PostController@upload')->name('upload');
+//Route::resource('posts','PostController');
+
+
+Route::group(['middleware' => 'filter.view.counts'], function() {
+    Route::get('posts', 'PostController@index')->name('posts.index');
+    Route::get('posts/post_id{id}', 'PostController@show')->name('post.view');
+});
+
+
+//Route::get('posts', 'PostController@index')->name('posts.index');
+//Route::post('posts', 'PostController@index')->name('posts.index');
+//Route::post('posts/create_in_list', 'PostController@createInList')->name('posts.create_in_list');
+//Route::post('upload','PostController@upload')->name('upload');
 
 // LIKE
 Route::post('like', ['as' => 'like', 'uses' => 'LikeController@like']);

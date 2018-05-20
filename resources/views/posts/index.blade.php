@@ -23,6 +23,8 @@
                     </div>
 
                 @endforelse
+
+                    {!! $posts->links() !!}
             </section>
         </div>
     </main>
