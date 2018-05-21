@@ -46,6 +46,15 @@
                 </div>
             </section>
         </div>
+        <div class="row">
+                    <section class="section col p-0 mt-4 border-top border-gray">
+
+            @include('comments.list')
+
+            </section>
+
+        </div>
+
     </main>
 
 @endsection

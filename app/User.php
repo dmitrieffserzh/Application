@@ -24,15 +24,21 @@ class User extends Authenticatable {
 
 
 	public function liked() {
-		return $this->morphedByMany( 'App\Post', 'content_id' )->whereDeletedAt( null );
+		return $this->morphedByMany( Post::class, 'content_id' )->whereDeletedAt( null );
 	}
 
+
 	public function profile() {
-		return $this->hasOne( 'App\Profile' );
+		return $this->hasOne( Profile::class );
 	}
 
 	public function isOnline() {
 		return Cache::has( 'user-is-online-' . $this->id );
+	}
+
+
+	public function comments() {
+		return $this->hasMany(Comment::class);
 	}
 
 //	public function getLikedAttribute() {
