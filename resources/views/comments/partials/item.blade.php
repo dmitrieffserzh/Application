@@ -57,7 +57,8 @@
     {{--print_r($item)--}}
 
 
-    <div id="comment-{{$item->id}}" class="media py-3 border-top border-gray">
+    <div id="comment-{{$item->id}}" class="media lh-100">
+
     <span class="d-inline-block position-relative mr-2">
         <img class="rounded-circle" style="width: 30px; height: 30px;"
              src="{{ getImage('thumbnail', $item->author->profile->avatar) }}" alt="{{ $item->author->nickname }}">
@@ -78,8 +79,12 @@
             @if($item->author->profile->name || $item->author->profile->surname)
                 <span class="d-block text-secondary small lh-125">{{$item->author->profile->name}} {{$item->author->profile->surname}}</span>
             @endif
-            <div class="comment-text">
+            <div class="comment-text text-secondary small mt-2 mb-3 p-3 bg-light rounded lh-125">
+                @if($item->deleted_at)
+                    Комментарий удален!
+                @else
                 {{$item->content}}
+                @endif
             </div>
 
 
