@@ -1,4 +1,6 @@
 <div class="comments pt-3 px-3">
+
+
     <h5>Комментарии <span class="badge badge-secondary">{{$post->comments->count()}}</span></h5>
     @php
         if($post){
@@ -17,7 +19,6 @@
             @include('comments.partials.item',['items'=>$comments])
         @endforeach
          <div class="editor">
-             <div id="comment_form" class="comment_form editor_box__textarea form-control"></div>
              <div class="btn-toolbar editor_box__toolbar" data-role="editor-toolbar" data-target="#editor">
                  <div class="btn-group">
                      <a class="btn btn-primary" data-edit="bold" title="Выделить жирным (Ctrl/Cmd+B)">
@@ -55,7 +56,7 @@
                      <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" style="opacity: 0; position: absolute; top: 0px; left: 0px; width: 37px; height: 30px;">
                  </div>
              </div>
-
+             <div id="comment_form" class="comment_form editor_box__textarea form-control"></div>
              <button type="submit" class="btn btn-primary pull-right">
                  <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                  ответить
@@ -64,15 +65,10 @@
 
 
         <script>
-            $(document).ready(function () {
-                $('#comment_form').wysiwyg({
-                    hotKeys: {
-                        'ctrl+b meta+b': 'bold',
-                        'ctrl+i meta+i': 'italic',
-                        'ctrl+u meta+u': 'underline',
-                    }
-                });
+            $(function () {
+                $('#comment-editor').wysiwyg();
             });
+
         </script>
     @else
         <div class="alert">

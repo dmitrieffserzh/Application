@@ -10794,3 +10794,13 @@ body {
   }
 }
 
+.comment-form {
+  display: none;
+}
+
+.comment-editor {
+  height: 50px;
+  padding: .5rem 1rem;
+  outline: none;
+}
+

@@ -495,4 +495,16 @@ body {
 //
 
 
+.comment {
+  &-add {
 
+  }
+  &-form {
+    display: none;
+  }
+  &-editor {
+    height: 50px;
+    padding: .5rem 1rem;
+    outline: none;
+  }
+}
