@@ -35,7 +35,7 @@ Route::group(['middleware' => 'filter.view.counts'], function() {
 
 
 // COMMENTS
-Route::post('add_comment', 'CommentController@add_comment');
+Route::post('add_comment', 'CommentController@add_comment')->name('comment.add');
 
 //Route::get('posts', 'PostController@index')->name('posts.index');
 //Route::post('posts', 'PostController@index')->name('posts.index');

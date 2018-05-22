@@ -11396,8 +11396,9 @@ $(function () {
 
         var data = {
             'item_id': data_link.data('item-id'),
+            'content_id': data_link.data('content-id'),
             'content-type': data_link.data('content-type'),
-            'content': data_link.parent().find('.comment-editor').text()
+            'content': data_link.parent().find('.comment-editor').html()
         };
         console.log(data);
         $.ajax({

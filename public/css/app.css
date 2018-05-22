@@ -10794,14 +10794,22 @@ body {
   }
 }
 
-.comment-form {
-  display: none;
+.comment-form__toolbar {
+  background: #fbfdff;
 }
 
-.comment-editor {
-  border: 2px solid #ebf3fb !important;
-  height: 5rem;
+.comment-form__input {
+  min-height: 5rem;
   padding: .5rem 1rem;
   outline: none;
+  -webkit-box-shadow: inset 0 1px 1px rgba(142, 142, 142, 0.2);
+          box-shadow: inset 0 1px 1px rgba(142, 142, 142, 0.2);
+  border: 1px solid #d8d8d8;
+}
+
+.comment-form__input:focus {
+  border: 1px solid #0af;
+  -webkit-box-shadow: 0 0 3px 0 #7fd4ff, inset 0 1px 1px rgba(142, 142, 142, 0.2);
+          box-shadow: 0 0 3px 0 #7fd4ff, inset 0 1px 1px rgba(142, 142, 142, 0.2);
 }
 

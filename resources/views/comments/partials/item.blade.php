@@ -1,4 +1,5 @@
 @foreach($items as $item)
+{{--    {{printf($item)}}--}}
     <div id="comment-{{$item->id}}" class="comment media lh-100">
         <span class="d-inline-block position-relative mr-2">
             <img class="rounded-circle" style="width: 30px; height: 30px;"
@@ -33,7 +34,7 @@
 
                     <div class="comment-add d-block text-muted font-weight-light font-monospace mt-2">
                         <div class="append-form"></div>
-                        <a href="#{{ $item->author->nickname }}" data-user-name="{{ $item->author->nickname }}" data-item-id="{{$item->id}}" data-content-type="post" class="comment-add-link">
+                        <a href="#{{ $item->author->nickname }}" data-user-name="{{ $item->author->nickname }}" data-item-id="{{$item->id}}" data-content-id="{{$post->id}}" data-content-type="post" class="comment-add-link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-right"><polyline points="15 10 20 15 15 20"></polyline><path d="M4 4v7a4 4 0 0 0 4 4h12"></path></svg>
                             Ответить</a>
 

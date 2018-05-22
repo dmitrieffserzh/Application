@@ -1,7 +1,5 @@
 @push('custom-scripts')
     <script src="{{ asset('js/components/rating.js') }}"></script>
-    <script src="{{ asset('js/components/jq_hotkeys.js') }}"></script>
-    <script src="{{ asset('js/components/bootstrap-wysiwyg.js') }}"></script>
 @endpush
 
 @extends('layouts.app')

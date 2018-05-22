@@ -19,8 +19,8 @@
         var html = $(this)[0].innerHTML;
 
         return html
-            .replace(/<(\b(?!(a|img|b|i|ul|ol|li))[^>\s]*)(.*?)(\s*\/?>)/g, '<p>')
-            .replace(/<(\/)(\b(?!(\/a|\/img|\/b|\/i|\/ul|\/ol|\/li))[^>\s]*)(.*?)(\s*\/?>)/g, '</p>')
+            //.replace(/<(\b(?!(a|img|b|i|ul|ol|li))[^>\s]*)(.*?)(\s*\/?>)/g, '<p>')
+            //.replace(/<(\/)(\b(?!(\/a|\/img|\/b|\/i|\/ul|\/ol|\/li))[^>\s]*)(.*?)(\s*\/?>)/g, '</p>')
             .replace(/<(use|svg)(\b(?!!)[^>\s]*)(.*?)(\s*\/?>)/g, '')
             .replace(/<(\/use|\/svg)(\b(?!!)[^>\s]*)(.*?)(\s*\/?>)/g, '')
             .replace(/<p>[\s]*<\/p>/g, '').replace(/\u00A0/g, '');

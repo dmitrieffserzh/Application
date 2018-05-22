@@ -500,12 +500,20 @@ body {
 
   }
   &-form {
-    display: none;
-  }
-  &-editor {
-    border: 2px solid #ebf3fb !important;
-    height: 5rem;
-    padding: .5rem 1rem;
-    outline: none;
+
+    &__toolbar {
+      background: #fbfdff;
+    }
+    &__input {
+      min-height: 5rem;
+      padding: .5rem 1rem;
+      outline: none;
+      box-shadow: inset 0 1px 1px rgba(142,142,142,.2);
+      border: 1px solid #d8d8d8;
+      &:focus {
+        border: 1px solid #0af;
+        box-shadow: 0 0 3px 0 #7fd4ff, inset 0 1px 1px rgba(142,142,142,.2);
+      }
+    }
   }
 }
