@@ -9,7 +9,7 @@ $(function () {
 
 
         $('.comment-form').hide({
-            duration: 200,
+            duration: 0,
             easing: "linear",
             complete: function () {
                 $(this).remove();
@@ -20,26 +20,55 @@ $(function () {
 
         this_parent.find('.append-form').append('' +
             '<form class="comment-form">' +
-            '<div class="comment-editor border border-gray rounded"></div>' +
-            // '<button type="submit" class="btn btn-primary pull-right">' +
-            // ' Ответить' +
-            // '</button>' +
+            '<div class="comment-editor rounded"></div>' +
+             '<button type="submit" class="send-comment btn btn-primary pull-right">' +
+             ' Ответить' +
+             '</button>' +
             '</form>');
 
         $('.comment-editor').wysiwyg();
         this_parent.find('.comment-form').show({
-            duration: 200,
+            duration: 0,
             easing: "linear"
         });
         //$('.comment-add-link').not(this).fadeIn(0);
 
 
         this_parent.find('.comment-editor').append('' +
-            '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-right"><polyline points="15 10 20 15 15 20"></polyline><path d="M4 4v7a4 4 0 0 0 4 4h12"></path></svg>' +
+            //'<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-right"><polyline points="15 10 20 15 15 20"></polyline><path d="M4 4v7a4 4 0 0 0 4 4h12"></path></svg>' +
             '<a href="#' + data_user_name + '" class="font-weight-bold">' + data_user_name + '</a>,&nbsp; ');
     });
 });
 
+// SEND COMMENT FORM
+$(function () {
+    $(document).on('click', '.send-comment', function (event) {
+
+        event.preventDefault();
+
+        var data_link = $(this).parent().parent().parent().find('.comment-add-link');
+
+        var data = {
+        'item_id'       :   data_link.data('item-id'),
+        'content-type'  :   data_link.data('content-type'),
+        'content'       :   data_link.parent().find('.comment-editor').text()
+    };
+        console.log(data);
+    $.ajax({
+        url: '/add_comment',
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: data,
+        success: function (data) {
+            console.log(data);
+        },
+        complete: function () {
+            console.log(data);
+        }
+    });
+
+    });
+});
 
 // var data = {
 //     'item_id'       : $(this).data('user-name'),

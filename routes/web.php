@@ -34,6 +34,9 @@ Route::group(['middleware' => 'filter.view.counts'], function() {
 });
 
 
+// COMMENTS
+Route::post('add_comment', 'CommentController@add_comment');
+
 //Route::get('posts', 'PostController@index')->name('posts.index');
 //Route::post('posts', 'PostController@index')->name('posts.index');
 //Route::post('posts/create_in_list', 'PostController@createInList')->name('posts.create_in_list');

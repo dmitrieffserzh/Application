@@ -503,7 +503,8 @@ body {
     display: none;
   }
   &-editor {
-    height: 50px;
+    border: 2px solid #ebf3fb !important;
+    height: 5rem;
     padding: .5rem 1rem;
     outline: none;
   }
